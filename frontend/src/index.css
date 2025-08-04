@@ -1,28 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import "tailwindcss";
 
-
 @theme {
-    --font-display: "Poppins", "sans-serif";
-    --breakpoint-3xl: 1920px;
-    --color-primary: #875cf5;
+  --font-display: "Poppins", "sans-serif";
+  --breakpoint-3xl: 1920px;
+  --color-primary: #875cf5;
 }
 
-@layer base{
-    html {
-        font-family: var(--font-display);
-    }
+@layer base {
+  html {
+    font-family: var(--font-display);
+  }
 
-    body {
-        background-color: #fcfbfc;
-        overflow-x: hidden;
-    }
+  body {
+    background-color: #fcfbfc;
+    overflow-x: hidden;
+  }
 }
 
 .input-box {
-    @apply w-full flex justify-between gap-3 text-sm text-black bg-slate-100 rounded px-4 py-3 mb-4 mt-3 border border-slate-200 outline-none;
+  @apply w-full flex justify-between gap-3 text-sm text-black bg-slate-100 rounded px-4 py-3 mb-4 mt-3 border border-slate-200 outline-none;
 }
 
 .btn-primary {
-    @apply w-full text-sm font-medium text-white bg-violet-500 shadow-lg shadow-purple-600/5 p-[10px] rounded-md hover:bg-purple-600/15 hover:text-purple-600;
+  @apply w-full text-sm font-medium text-white bg-violet-500 shadow-lg shadow-purple-600/5 p-[10px] rounded-md hover:bg-purple-600/15 hover:text-purple-600;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid hsla(0, 0%, 80%);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px hsl(0, 0%, 0%, 0.1);
+  padding: 20px;
+  margin: 10px;
+  max-width: 400px;
+  background-color: white;
+  width: 400px;
+  height: 130px;
+  box-sizing: border-box; /* includes padding/border in width/height */
+}
+
+.card .card-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.card-text {
+  text-align: left;
+}
+
+.card .card-data {
+  font-size: 1.35rem; /* 20px */
+  font-weight: 700; /* bold */
+  margin: 0;
+  text-align: left;
+}
+
+.card .card-title {
+  font-size: 1rem; /* 16px */
+  font-weight: 500; /* medium */
+  margin: 4px 0 0;
+  text-align: left;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.card-container {
+  display: flex;
+  gap: 20px; /* spacing between cards */
+  padding: 10px;
+  flex-wrap: nowrap; /* prevents wrapping to the next line */
+  overflow-x: auto; /* enables horizontal scrolling if too many cards */
+}
+
+.card-container:nth-of-type(2) .card {
+  height: 160px;
+  width: 480px;
 }
