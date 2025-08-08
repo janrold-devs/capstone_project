@@ -14,10 +14,10 @@ const ProductListData = [
   {
     id: 2,
     image: "",
-    productName: "Wintermelon Delight",
+    productName: "Winter melon Delight",
     Size: "22 oz",
     price: 45,
-    ingredients: "Wintermelon, Cream, Tapioca",
+    ingredients: "Winter melon, Cream, Tapioca",
     category: "milk tea",
     status: "Available",
   },
@@ -29,7 +29,7 @@ const ProductListData = [
     price: 42,
     ingredients: "Matcha, Milk, Tapioca",
     category: "milk tea",
-    status: "Available",
+    status: "Not Available",
   },
   {
     id: 4,
@@ -49,33 +49,91 @@ const ProductListData = [
     price: 43,
     ingredients: "Taro, Milk, Tapioca",
     category: "milk tea",
-    status: "Available",
+    status: "Not Available",
   },
 ];
 
 const Products = () => {
+  // State to hold the user's search input
+  const [query, setQuery] = React.useState("");
+
+  // State to track the current page number in pagination
+  const [currentPage, setCurrentPage] = React.useState(1);
+
+  // Number of products to display per page
+  const itemsPerPage = 10;
+
+  // Filter the product list based on the user's search query
+  const filteredProducts = ProductListData.filter((order) =>
+    order.productName.toLowerCase().includes(query.toLowerCase())
+  );
+
+  // Calculate the total number of pages based on the filtered results
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+  // Get the products to be shown on the current page
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * itemsPerPage, // start index
+    currentPage * itemsPerPage // end index (non-inclusive)
+  );
+
+  // Function to go to the previous page
+  const handlePrevious = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  // Function to go to the next page
+  const handleNext = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
   return (
     <div className="p-6">
       <div className="bg-white p-4 rounded border border-gray-200">
         <strong className="text-lg">Product List</strong>
-        {/* Button for Adding New Product */}
-        <div className="mt-2">
-          <button className="bg-blue-600 text-white text-sm px-2 py-2 rounded">
-            Add Product
-          </button>
+
+        {/* Add Product Button */}
+        <div className="mt-4">
+          <div className="flex items-center">
+            <button className="bg-blue-600 hover:bg-blue-500 text-white text-sm px-4 py-2 rounded h-[40px]">
+              Add Product
+            </button>
+          </div>
+
+          {/* Divider */}
+          <hr className="my-4 border-gray-300" />
+
+          {/* Export + Search */}
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex gap-2">
+              <button className="bg-green-600 hover:bg-green-500 text-white text-sm px-4 py-2 rounded h-[40px]">
+                Excel
+              </button>
+              <button className="bg-red-600 hover:bg-red-500 text-white text-sm px-4 py-2 rounded h-[40px]">
+                PDF
+              </button>
+              <button className="bg-gray-600 hover:bg-gray-500 text-white text-sm px-4 py-2 rounded h-[40px]">
+                Print
+              </button>
+            </div>
+
+            {/* Search Bar */}
+            <div className="w-full sm:w-auto">
+              <input
+                className="p-3 px-4 border border-gray-300 rounded-lg h-[44px] w-full sm:w-72 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200"
+                type="text"
+                placeholder="Search"
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setCurrentPage(1); // Reset to page 1 on search
+                }}
+              />
+            </div>
+          </div>
         </div>
-        {/* Buttons for  Exporting the Data*/}
-        <div className="space-x-3 mt-3">
-          <button className="bg-green-600 text-white text-sm px-4 py-2 rounded">
-            Excel
-          </button>
-          <button className="bg-red-600 text-white text-sm px-4 py-2 rounded">
-            PDF
-          </button>
-          <button className="bg-gray-600 text-white text-sm px-4 py-2 rounded">
-            Print
-          </button>
-        </div>
+
+        {/* Table */}
         <div className="mt-4 overflow-x-auto">
           <table className="w-full table-auto border border-gray-300 text-sm">
             <thead className="bg-gray-100">
@@ -91,15 +149,24 @@ const Products = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-300 text-center">
-              {ProductListData.map((order) => (
+              {paginatedProducts.map((order) => (
                 <tr key={order.id} className="divide-x divide-gray-300">
-                  <td className="p-2">{order.image || "-"}</td>
+                  <td className="p-2">{order.image || "None"}</td>
                   <td className="p-2 text-left">{order.productName}</td>
                   <td className="p-2">{order.Size}</td>
                   <td className="p-2">₱{order.price}</td>
                   <td className="p-2">{order.ingredients}</td>
                   <td className="p-2">{order.category}</td>
-                  <td className="p-2 text-green-600">{order.status}</td>
+                  <td
+                    className={`p-2 font-sm ${
+                      order.status.toLowerCase() === "available"
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }`}
+                  >
+                    {order.status}
+                  </td>
+
                   <td className="p-2 space-x-1">
                     <button className="text-blue-600 hover:underline text-xs">
                       Edit
@@ -112,6 +179,27 @@ const Products = () => {
               ))}
             </tbody>
           </table>
+
+          {/* Pagination Controls */}
+          <div className="flex justify-end mt-4 gap-2">
+            <button
+              onClick={handlePrevious}
+              disabled={currentPage === 1}
+              className="px-3 py-1 hover:underline disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <span className="text-sm px-2 py-1">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={handleNext}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1  hover:underline disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
