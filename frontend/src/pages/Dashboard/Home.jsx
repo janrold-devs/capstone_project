@@ -1,29 +1,33 @@
 import React from "react";
-import ChartComponent from "../../components/Chart"; // This is your Line chart
+import ChartComponent from "../../components/Chart"; // Line Chart
+import { GrTransaction } from "react-icons/gr";
+import { GiMoneyStack } from "react-icons/gi";
+import { MdInventory } from "react-icons/md";
+import { RiFileDamageFill } from "react-icons/ri";
 
 function Home() {
   const cardData = [
     {
       id: 1,
-      icon: "https://cdn-icons-png.flaticon.com/512/1170/1170678.png",
+      icon: <GrTransaction className="text-black-500 w-8 h-8 mr-4" />,
       value: "1032",
       label: "Product Transaction",
     },
     {
       id: 2,
-      icon: "https://cdn-icons-png.flaticon.com/512/1170/1170627.png",
+      icon: <GiMoneyStack className="text-black-500 w-8 h-8 mr-4" />,
       value: "2513",
       label: "Sales",
     },
     {
       id: 3,
-      icon: "https://cdn-icons-png.flaticon.com/512/1170/1170638.png",
+      icon: <MdInventory className="text-black-500 w-8 h-8 mr-4" />,
       value: "1103",
       label: "Number of Stock In",
     },
     {
       id: 4,
-      icon: "https://cdn-icons-png.flaticon.com/512/1170/1170638.png",
+      icon: <RiFileDamageFill className="text-black-500 w-8 h-8 mr-4" />,
       value: "1206",
       label: "Spoiled and Damaged Ingredients",
     },
@@ -36,14 +40,14 @@ function Home() {
         {cardData.map((card) => (
           <div
             key={card.id}
-            className="w-1/5 h-[90px] border border-gray-300 rounded flex items-center p-4 shadow-md"
+            className="w-full h-[70px] border border-gray-300 rounded flex items-center p-4 shadow-md"
           >
-            <img src={card.icon} alt="icon" className="w-10 h-10 mr-4" />
+            {card.icon}
             <div className="flex flex-col justify-center">
-              <span className="text-[25px] font-semibold leading-none">
+              <span className="text-[20px] font-semibold leading-none">
                 {card.value}
               </span>
-              <span className="text-[15px] text-gray-700 leading-tight">
+              <span className="text-[14px] text-gray-700 leading-tight">
                 {card.label}
               </span>
             </div>
