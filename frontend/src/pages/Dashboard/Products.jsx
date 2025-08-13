@@ -6,6 +6,7 @@ import { FaFilePdf } from "react-icons/fa6";
 import { IoPrintSharp, IoSearch } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
+
 const data = [
   {
     id: 1,
@@ -196,7 +197,6 @@ const Products = () => {
                     </td>
                     <td className="p-1">{order.Size}</td>
                     <td className="p-1">₱{order.price}</td>
-                    {/* Each ingredients enclosed in gray bg */}
                     <td className="p-1">
                       {Array.isArray(order.ingredients) ? (
                         <div className="flex flex-wrap gap-1 justify-center">

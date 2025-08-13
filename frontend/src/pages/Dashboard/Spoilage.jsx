@@ -291,6 +291,7 @@ const Spoilage = () => {
         </div>
       </div>
       <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
+      giy
     </>
   );
 };
