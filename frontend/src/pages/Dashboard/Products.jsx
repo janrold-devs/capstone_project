@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Delete from "../../components/Delete";
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 import { FaFilePdf } from "react-icons/fa6";
@@ -58,43 +57,184 @@ const data = [
     category: "Milk Tea",
     status: "Not Available",
   },
+  {
+    id: 6,
+    image: "",
+    productName: "Honey Lemon Tea",
+    Size: "12 oz",
+    price: 38,
+    ingredients: ["Honey", "Lemon", "Black Tea"],
+    category: "Fruit Tea",
+    status: "Available",
+  },
+  {
+    id: 7,
+    image: "",
+    productName: "Chocolate Mint Frappe",
+    Size: "16 oz",
+    price: 65,
+    ingredients: ["Chocolate Syrup", "Mint", "Milk", "Ice Cream"],
+    category: "Frappe",
+    status: "Available",
+  },
+  {
+    id: 8,
+    image: "",
+    productName: "Thai Milk Tea",
+    Size: "22 oz",
+    price: 55,
+    ingredients: ["Thai Tea Leaves", "Condensed Milk"],
+    category: "Specialty Tea",
+    status: "Available",
+  },
+  {
+    id: 9,
+    image: "",
+    productName: "Strawberry Cheesecake",
+    Size: "16 oz",
+    price: 70,
+    ingredients: ["Strawberry", "Cream Cheese", "Graham Cracker"],
+    category: "Specialty Drink",
+    status: "Not Available",
+  },
+  {
+    id: 10,
+    image: "",
+    productName: "Ube Latte",
+    Size: "12 oz",
+    price: 50,
+    ingredients: ["Ube Halaya", "Milk", "Purple Yam Powder"],
+    category: "Latte",
+    status: "Available",
+  },
+  {
+    id: 11,
+    image: "",
+    productName: "Mango Graham",
+    Size: "22 oz",
+    price: 60,
+    ingredients: ["Mango", "Graham Cracker", "Cream"],
+    category: "Specialty Drink",
+    status: "Available",
+  },
+  {
+    id: 12,
+    image: "",
+    productName: "Cookies and Cream",
+    Size: "16 oz",
+    price: 65,
+    ingredients: ["Oreo Cookies", "Milk", "Vanilla Ice Cream"],
+    category: "Frappe",
+    status: "Available",
+  },
+  {
+    id: 13,
+    image: "",
+    productName: "Lychee Green Tea",
+    Size: "12 oz",
+    price: 45,
+    ingredients: ["Lychee Syrup", "Green Tea"],
+    category: "Fruit Tea",
+    status: "Not Available",
+  },
+  {
+    id: 14,
+    image: "",
+    productName: "Caramel Macchiato",
+    Size: "16 oz",
+    price: 58,
+    ingredients: ["Espresso", "Caramel Syrup", "Steamed Milk"],
+    category: "Coffee",
+    status: "Available",
+  },
+  {
+    id: 15,
+    image: "",
+    productName: "Pandan Coconut",
+    Size: "12 oz",
+    price: 48,
+    ingredients: ["Pandan Leaves", "Coconut Milk"],
+    category: "Specialty Tea",
+    status: "Available",
+  },
+  {
+    id: 16,
+    image: "",
+    productName: "Blueberry Yogurt",
+    Size: "16 oz",
+    price: 52,
+    ingredients: ["Blueberry", "Yogurt", "Honey"],
+    category: "Yogurt Drink",
+    status: "Available",
+  },
+  {
+    id: 17,
+    image: "",
+    productName: "Avocado Coffee",
+    Size: "12 oz",
+    price: 62,
+    ingredients: ["Avocado", "Espresso", "Condensed Milk"],
+    category: "Specialty Coffee",
+    status: "Not Available",
+  },
+  {
+    id: 18,
+    image: "",
+    productName: "Cucumber Lime",
+    Size: "16 oz",
+    price: 42,
+    ingredients: ["Cucumber", "Lime", "Mint"],
+    category: "Refresher",
+    status: "Available",
+  },
+  {
+    id: 19,
+    image: "",
+    productName: "Red Velvet Latte",
+    Size: "12 oz",
+    price: 55,
+    ingredients: ["Red Velvet Powder", "Milk", "Cream Cheese Foam"],
+    category: "Latte",
+    status: "Available",
+  },
+  {
+    id: 20,
+    image: "",
+    productName: "Dalgona Coffee",
+    Size: "16 oz",
+    price: 60,
+    ingredients: ["Instant Coffee", "Sugar", "Hot Water", "Milk"],
+    category: "Coffee",
+    status: "Available",
+  },
 ];
 
 const Products = () => {
-  // State to hold the user's search input
-  const [query, setQuery] = React.useState("");
+  const [query, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showDelete, setShowDelete] = useState(false);
 
-  // State to track the current page number in pagination
-  const [currentPage, setCurrentPage] = React.useState(1);
-
-  // Number of products to display per page
   const itemsPerPage = 15;
 
-  // Filter the product list based on the user's search query
   const filteredProducts = data.filter((order) =>
     order.productName.toLowerCase().includes(query.toLowerCase())
   );
 
-  // Calculate the total number of pages based on the filtered results
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
-  // Get the products to be shown on the current page
   const paginatedProducts = filteredProducts.slice(
-    (currentPage - 1) * itemsPerPage, // start index
-    currentPage * itemsPerPage // end index (non-inclusive)
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
-  // Function to go to the previous page
   const handlePrevious = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  // Function to go to the next page
   const handleNext = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
-  // Get color class for stock alert
   const getStatusColor = (status) => {
     switch (status) {
       case "Available":
@@ -106,49 +246,41 @@ const Products = () => {
     }
   };
 
-  // Delete Modal
-  const [showDelete, setShowDelete] = useState(false);
-
   return (
     <>
-      <div className="p-6 min-h-screen flex flex-col">
+      <div
+        className={`p-6 min-h-screen flex flex-col transition-all duration-300 ${
+          showDelete ? "blur-sm" : ""
+        }`}
+      >
         <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow">
           <strong className="text-lg">Product List</strong>
 
-          {/* Top Controls Row */}
-          <div
-            className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4  p-2 rounded-lg shadow-sm"
-            overflow-hidden
-          >
-            {/* Buttons - Left Side */}
+          {/* Top Controls */}
+          <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
+            {/* Left Controls */}
             <div className="flex items-center gap-3">
-              {/* Add Product Button */}
               <button className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md">
                 + Add Product
               </button>
-
-              {/* Vertical Divider */}
               <div className="w-px h-8 bg-gray-300"></div>
-
-              {/* Export Buttons */}
               <div className="flex items-center gap-2">
                 <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md">
                   <PiMicrosoftExcelLogoFill className="text-lg" />
                   Excel
                 </button>
-
                 <button className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
                   <FaFilePdf />
                   PDF
                 </button>
-                <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2  rounded h-[35px] shadow-md">
+                <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
                   <IoPrintSharp />
                   Print
                 </button>
               </div>
             </div>
 
-            {/* Search Bar - Right Side */}
+            {/* Search */}
             <div className="flex-1 max-w-xs relative">
               <input
                 className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
@@ -157,7 +289,7 @@ const Products = () => {
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
-                  setCurrentPage(1); // Reset to page 1 on search
+                  setCurrentPage(1);
                 }}
               />
               <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
@@ -166,86 +298,107 @@ const Products = () => {
 
           {/* Table */}
           <div className="mt-3 flex flex-col flex-grow">
-            <table className="bg-white w-full text-sm border-collapse rounded-lg shadow-sm overflow-hidden">
-              <thead className="border-b-3 border-stone-100 text-center">
-                <tr>
-                  <th className="p-1 w-[300px]">Product Name</th>
-                  <th className="p-1">Size</th>
-                  <th className="p-1">Price</th>
-                  <th className="p-1">Ingredients</th>
-                  <th className="p-1">Category</th>
-                  <th className="p-1">Status</th>
-                  <th className="p-1 w-[150px]">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y-3 divide-stone-100 text-center">
-                {paginatedProducts.map((order) => (
-                  <tr key={order.id}>
-                    <td className="p-1 w-[300px] text-left flex items-center gap-2">
-                      {order.image ? (
-                        <img
-                          src={order.image}
-                          alt={order.productName}
-                          className="w-10 h-10 object-cover rounded"
-                        />
-                      ) : (
-                        <div className="w-10 h-10 bg-gray-200 rounded flex items-center justify-center text-gray-500 text-xs">
-                          N/A
-                        </div>
-                      )}
-                      <span className="font-medium">{order.productName}</span>
-                    </td>
-                    <td className="p-1">{order.Size}</td>
-                    <td className="p-1">₱{order.price}</td>
-                    <td className="p-1">
-                      {Array.isArray(order.ingredients) ? (
-                        <div className="flex flex-wrap gap-1 justify-center">
-                          {order.ingredients.map((ingredient, index) => (
-                            <span
-                              key={index}
-                              className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs shadow-sm"
-                            >
-                              {ingredient}
+            <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
+              <div
+                className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-280px)]"
+                style={{ scrollbarGutter: "stable" }}
+              >
+                <table
+                  className="w-full text-sm rounded-lg table-fixed"
+                  style={{ minWidth: "900px" }}
+                >
+                  <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
+                    <tr>
+                      <th className="p-1 text-left w-[280px]">Product Name</th>
+                      <th className="p-1 w-[90px]">Size</th>
+                      <th className="p-1 w-[90px]">Price</th>
+                      <th className="p-1 w-[320px]">Ingredients</th>
+                      <th className="p-1 w-[140px]">Category</th>
+                      <th className="p-1 w-[110px]">Status</th>
+                      <th className="p-1 w-[170px]">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y-3 divide-stone-100 text-center">
+                    {paginatedProducts.length > 0 ? (
+                      paginatedProducts.map((order) => (
+                        <tr key={order.id}>
+                          <td className="p-1 text-left flex items-center gap-2 w-[280px]">
+                            {order.image ? (
+                              <img
+                                src={order.image}
+                                alt={order.productName}
+                                className="w-10 h-10 object-cover rounded"
+                              />
+                            ) : (
+                              <div className="w-10 h-10 bg-gray-200 rounded flex items-center justify-center text-gray-500 text-xs">
+                                N/A
+                              </div>
+                            )}
+                            <span className="font-medium">
+                              {order.productName}
                             </span>
-                          ))}
-                        </div>
-                      ) : (
-                        order.ingredients
-                      )}
-                    </td>
-
-                    <td className="p-1">{order.category}</td>
-                    <td>
-                      <span
-                        className={`px-2 py-1 rounded text-xs shadow-sm font-medium ${getStatusColor(
-                          order.status
-                        )}`}
-                      >
-                        {order.status}
-                      </span>
-                    </td>
-
-                    <td className="p-1 w-[150px]">
-                      <div className="flex items-center justify-center gap-3">
-                        <button className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs">
-                          <FiEdit className="text-sm" />
-                          Edit
-                        </button>
-                        <button
-                          className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
-                          onClick={() => setShowDelete(true)}
+                          </td>
+                          <td className="p-1 w-[90px]">{order.Size}</td>
+                          <td className="p-1 w-[90px]">₱{order.price}</td>
+                          <td className="p-1 w-[320px]">
+                            {Array.isArray(order.ingredients) ? (
+                              <div className="flex flex-wrap gap-1 justify-center">
+                                {order.ingredients.map((ingredient, index) => (
+                                  <span
+                                    key={index}
+                                    className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs shadow-sm"
+                                  >
+                                    {ingredient}
+                                  </span>
+                                ))}
+                              </div>
+                            ) : (
+                              order.ingredients
+                            )}
+                          </td>
+                          <td className="p-1 w-[140px]">{order.category}</td>
+                          <td className="p-1 w-[110px]">
+                            <span
+                              className={`px-1 py-1 rounded text-xs shadow-sm font-medium ${getStatusColor(
+                                order.status
+                              )}`}
+                            >
+                              {order.status}
+                            </span>
+                          </td>
+                          <td className="p-1 w-[170px]">
+                            <div className="flex items-center justify-center gap-3">
+                              <button className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs">
+                                <FiEdit className="text-sm" />
+                                Edit
+                              </button>
+                              <button
+                                className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
+                                onClick={() => setShowDelete(true)}
+                              >
+                                <RiDeleteBin5Line className="text-sm" />
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan="7"
+                          className="p-4 text-center text-gray-500"
                         >
-                          <RiDeleteBin5Line className="text-sm" />
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                          No products found matching your search
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-            {/* Pagination Controls */}
+            {/* Pagination */}
             <div className="mt-auto pt-4">
               <div className="flex justify-end">
                 <div className="flex items-center gap-4">
@@ -272,6 +425,8 @@ const Products = () => {
           </div>
         </div>
       </div>
+
+      {/* Delete Modal */}
       <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
     </>
   );

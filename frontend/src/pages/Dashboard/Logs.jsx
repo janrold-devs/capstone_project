@@ -1,6 +1,15 @@
 import React from "react";
 import { IoSearch } from "react-icons/io5";
 import { FaRegCircleUser } from "react-icons/fa6";
+import {
+  FaPlusCircle,
+  FaEdit,
+  FaTrashAlt,
+  FaEye,
+  FaRegCalendarAlt,
+  FaUser,
+  FaTasks,
+} from "react-icons/fa";
 
 const data = [
   {
@@ -93,12 +102,103 @@ const data = [
     details: "Modified pricing for 'Classic Vanilla'-16 oz-₱85",
     status: "Failed",
   },
+  {
+    id: 11,
+    date: "June 13, 2025",
+    time: "12:15 PM",
+    user: "Manager",
+    action: "Approved",
+    details: "Approved new inventory shipment",
+    status: "Completed",
+  },
+  {
+    id: 12,
+    date: "June 13, 2025",
+    time: "1:30 PM",
+    user: "Staff",
+    action: "Created",
+    details: "Added new product 'Caramel Latte'-12 oz-₱95",
+    status: "Pending",
+  },
+  {
+    id: 13,
+    date: "June 13, 2025",
+    time: "2:45 PM",
+    user: "Staff",
+    action: "Deleted",
+    details: "Removed expired product 'Matcha Frappe'-12 oz",
+    status: "Completed",
+  },
+  {
+    id: 14,
+    date: "June 13, 2025",
+    time: "3:20 PM",
+    user: "System",
+    action: "Automatic",
+    details: "Daily sales report generated",
+    status: "Completed",
+  },
+  {
+    id: 15,
+    date: "June 13, 2025",
+    time: "4:05 PM",
+    user: "Staff",
+    action: "Updated",
+    details: "Changed opening hours for weekends",
+    status: "Pending",
+  },
+  {
+    id: 16,
+    date: "June 14, 2025",
+    time: "9:00 AM",
+    user: "Manager",
+    action: "Approved",
+    details: "Approved staff schedule changes",
+    status: "Completed",
+  },
+  {
+    id: 17,
+    date: "June 14, 2025",
+    time: "10:30 AM",
+    user: "Staff",
+    action: "Created",
+    details: "Added seasonal product 'Mango Tango'-16 oz-₱110",
+    status: "Completed",
+  },
+  {
+    id: 18,
+    date: "June 14, 2025",
+    time: "11:45 AM",
+    user: "Staff",
+    action: "Updated",
+    details: "Modified recipe for 'Hazelnut Coffee'",
+    status: "Failed",
+  },
+  {
+    id: 19,
+    date: "June 14, 2025",
+    time: "2:15 PM",
+    user: "System",
+    action: "Automatic",
+    details: "Inventory restock alert triggered",
+    status: "Pending",
+  },
+  {
+    id: 20,
+    date: "June 14, 2025",
+    time: "3:50 PM",
+    user: "Manager",
+    action: "Deleted",
+    details: "Removed discontinued supplier 'SweetSyrups Inc.'",
+    status: "Completed",
+  },
 ];
 
 const Logs = () => {
   const [query, setQuery] = React.useState("");
   const [userFilter, setUserFilter] = React.useState("All Users");
   const [actionFilter, setActionFilter] = React.useState("All Actions");
+  const [selectedDate, setSelectedDate] = React.useState("");
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 15;
 
@@ -114,7 +214,20 @@ const Logs = () => {
       userFilter === "All Users" || order.user === userFilter;
     const matchesActionFilter =
       actionFilter === "All Actions" || order.action === actionFilter;
-    return matchesSearch && matchesUserFilter && matchesActionFilter;
+    const matchesDateFilter =
+      !selectedDate ||
+      order.date ===
+        new Date(selectedDate).toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        });
+    return (
+      matchesSearch &&
+      matchesUserFilter &&
+      matchesActionFilter &&
+      matchesDateFilter
+    );
   });
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -145,13 +258,28 @@ const Logs = () => {
   const getActionColor = (action) => {
     switch (action) {
       case "Created":
-        return "text-green-800";
+        return "text-green-700";
       case "Updated":
-        return "text-blue-800";
+        return "text-blue-700";
       case "Deleted":
-        return "text-red-800";
+        return "text-red-700";
       default:
-        return "text-gray-800";
+        return "text-gray-700";
+    }
+  };
+
+  const getActionIcon = (action) => {
+    switch (action) {
+      case "Created":
+        return <FaPlusCircle className="text-green-700" />;
+      case "Updated":
+        return <FaEdit className="text-blue-700" />;
+      case "Deleted":
+        return <FaTrashAlt className="text-red-700" />;
+      case "Viewed":
+        return <FaEye className="text-gray-700" />;
+      default:
+        return null;
     }
   };
 
@@ -162,13 +290,13 @@ const Logs = () => {
 
         {/* Top Controls */}
         <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
-          <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-            {/* Search */}
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Search Bar */}
             <div className="flex-1 max-w-xs relative">
               <input
-                className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
+                className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[38px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
                 type="text"
-                placeholder="Search by User"
+                placeholder="Search by Details"
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
@@ -178,63 +306,86 @@ const Logs = () => {
               <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
 
-            {/* Dropdown for User */}
-            <select
-              className="w-[200px] h-[35px] text-gray-500 p-2 border border-gray-300 rounded-lg shadow-sm bg-gray-50 focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
-              value={userFilter}
+            {/* User Dropdown */}
+            <div className="relative w-[200px]">
+              <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <select
+                className="pl-9 w-full h-[38px] text-gray-500 p-2 border border-gray-300 rounded-lg shadow-sm bg-gray-50 focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
+                value={userFilter}
+                onChange={(e) => {
+                  setUserFilter(e.target.value);
+                  setCurrentPage(1);
+                }}
+              >
+                {users.map((user) => (
+                  <option key={user} value={user}>
+                    {user}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Action Dropdown */}
+            <div className="relative w-[200px]">
+              <FaTasks className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <select
+                className="pl-9 w-full h-[38px] text-gray-500 p-2 border border-gray-300 rounded-lg shadow-sm bg-gray-50 focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
+                value={actionFilter}
+                onChange={(e) => {
+                  setActionFilter(e.target.value);
+                  setCurrentPage(1);
+                }}
+              >
+                {actions.map((action) => (
+                  <option key={action} value={action}>
+                    {action}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Date picker*/}
+          <div className="flex-1 max-w-xs relative">
+            <input
+              type="date"
+              value={selectedDate}
               onChange={(e) => {
-                setUserFilter(e.target.value);
+                setSelectedDate(e.target.value);
                 setCurrentPage(1);
               }}
-            >
-              {users.map((user) => (
-                <option key={user} value={user}>
-                  {user}
-                </option>
-              ))}
-            </select>
-            {/* Dropdown for Actions */}
-            <select
-              className="w-[200px] h-[35px] text-gray-500 p-2 border border-gray-300 rounded-lg shadow-sm bg-gray-50 focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
-              value={actionFilter}
-              onChange={(e) => {
-                setActionFilter(e.target.value);
-                setCurrentPage(1);
-              }}
-            >
-              {actions.map((action) => (
-                <option key={action} value={action}>
-                  {action}
-                </option>
-              ))}
-            </select>
+              placeholder="Pick a date"
+              className="p-3 pr-10 pl-4 bg-gray-50 border border-gray-300 rounded-lg h-[38px] w-full text-gray-500 shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
+            />
+            <FaRegCalendarAlt className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
           </div>
         </div>
 
         {/* Main Table */}
         <div className="mt-3 flex flex-col flex-grow">
-          <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0">
+          <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
+            <div className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-280px)]">
+              <table
+                className="w-full text-sm rounded-lg"
+                style={{ minWidth: "900px" }}
+              >
+                <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
                   <tr>
-                    <th className="p-2 text-left min-w-[140px]">TIMESTAMP</th>
-                    <th className="p-2 text-left min-w-[120px]">USER</th>
-                    <th className="p-2 min-w-[100px]">ACTION</th>
-                    <th className="p-2 text-left min-w-[300px]">DETAILS</th>
-                    <th className="p-2 min-w-[100px]">STATUS</th>
+                    <th className="p-2 text-left w-[150px] rounded-tl-lg">
+                      TIMESTAMP
+                    </th>
+                    <th className="p-2 text-left w-[130px]">USER</th>
+                    <th className="p-2 text-left w-[100px]">ACTION</th>
+                    <th className="p-2 text-left w-[400px]">DETAILS</th>
+                    <th className="p-2 w-[120px] rounded-tr-lg">STATUS</th>
                   </tr>
                 </thead>
-              </table>
-            </div>
-
-            <div className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-280px)]">
-              <table className="w-full text-sm">
                 <tbody className="divide-y-3 divide-stone-100 text-center">
                   {paginatedProducts.length > 0 ? (
                     paginatedProducts.map((order) => (
                       <tr key={order.id} className="hover:bg-gray-50">
-                        <td className="p-2 text-left min-w-[140px]">
+                        {/* Time */}
+                        <td className="p-2 text-left w-[150px]">
                           <div className="flex flex-col">
                             <span className="font-medium">{order.date}</span>
                             <span className="text-xs text-gray-500">
@@ -242,23 +393,33 @@ const Logs = () => {
                             </span>
                           </div>
                         </td>
-                        <td className="p-2 min-w-[120px]">
+                        {/* User */}
+                        <td className="p-2 w-[130px]">
                           <div className="flex items-center justify-left gap-1">
-                            <FaRegCircleUser className="h-[40px] text-gray-500 flex-shrink-0" />
-                            <span>{order.user}</span>
+                            <FaRegCircleUser className="w-[25px] h-[25px] text-gray-400 flex-shrink-0" />
+                            <span className="truncate">{order.user}</span>
                           </div>
                         </td>
+                        {/* Action */}
                         <td
-                          className={`p-2 min-w-[100px] font-medium ${getActionColor(
+                          className={`p-2 w-[100px] font-medium ${getActionColor(
                             order.action
                           )}`}
                         >
-                          {order.action}
+                          <div className="flex items-center justify-start gap-1">
+                            {getActionIcon(order.action)}
+                            <span>{order.action}</span>
+                          </div>
                         </td>
-                        <td className="p-2 text-left min-w-[300px]">
-                          {order.details}
+
+                        {/* Details */}
+                        <td className="p-2 text-left w-[400px]">
+                          <div className="truncate" title={order.details}>
+                            {order.details}
+                          </div>
                         </td>
-                        <td className="p-2 min-w-[100px]">
+                        {/* Status */}
+                        <td className="p-2 w-[120px]">
                           <span
                             className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
                               order.status

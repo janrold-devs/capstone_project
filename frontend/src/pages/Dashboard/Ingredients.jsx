@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Delete from "../../components/Delete";
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 import { FaFilePdf } from "react-icons/fa6";
@@ -100,104 +99,104 @@ const data = [
   },
   {
     id: 11,
-    name: "Yogurt",
-    quantity: "1",
-    unit: "Liter",
-    alert: "Low Stock",
-    expiration: "2028-10-05",
-    remarks: "Second Batch",
+    name: "Whipped Cream",
+    quantity: "24",
+    unit: "Can",
+    alert: "On Stock",
+    expiration: "2025-04-15",
+    remarks: "Aerosol cans",
   },
   {
     id: 12,
-    name: "Chocolate Syrup",
+    name: "Caramel Syrup",
     quantity: "3",
-    unit: "Liters",
-    alert: "In Stock",
-    expiration: "2027-03-12",
-    remarks: "Premium brand",
+    unit: "Bottle",
+    alert: "Low Stock",
+    expiration: "2026-01-30",
+    remarks: "500ml bottles",
   },
   {
     id: 13,
     name: "Matcha Powder",
-    quantity: "2",
-    unit: "Kilograms",
-    alert: "Low Stock",
-    expiration: "2026-07-25",
-    remarks: "Imported from Japan",
+    quantity: "0",
+    unit: "Kilogram",
+    alert: "No Stock",
+    expiration: "2024-12-01",
+    remarks: "Premium grade",
   },
   {
     id: 14,
-    name: "Honey",
-    quantity: "5",
-    unit: "Liters",
-    alert: "In Stock",
-    expiration: "2029-11-18",
-    remarks: "Organic batch",
+    name: "Vanilla Extract",
+    quantity: "8",
+    unit: "Bottle",
+    alert: "On Stock",
+    expiration: "2027-05-20",
+    remarks: "Pure extract",
   },
   {
     id: 15,
-    name: "Whipping Cream",
+    name: "Cinnamon Sticks",
     quantity: "1",
-    unit: "Liter",
+    unit: "Pack",
     alert: "Low Stock",
-    expiration: "2025-08-30",
-    remarks: "Keep refrigerated",
+    expiration: "2025-09-10",
+    remarks: "50g pack",
   },
   {
     id: 16,
-    name: "Brown Sugar",
-    quantity: "10",
-    unit: "Kilograms",
-    alert: "In Stock",
-    expiration: "2029-02-11",
-    remarks: "Fine grain",
+    name: "Condensed Milk",
+    quantity: "15",
+    unit: "Can",
+    alert: "On Stock",
+    expiration: "2025-07-25",
+    remarks: "Sweetened",
   },
   {
     id: 17,
-    name: "Caramel Sauce",
-    quantity: "4",
-    unit: "Liters",
-    alert: "In Stock",
-    expiration: "2028-09-20",
-    remarks: "New stock",
+    name: "Tapioca Pearls",
+    quantity: "0",
+    unit: "Kilogram",
+    alert: "No Stock",
+    expiration: "2024-11-15",
+    remarks: "Black pearls",
   },
   {
     id: 18,
-    name: "Oolong Tea Leaves",
-    quantity: "6",
-    unit: "Kilograms",
-    alert: "In Stock",
-    expiration: "2027-06-05",
-    remarks: "Aged variety",
+    name: "Honey",
+    quantity: "5",
+    unit: "Bottle",
+    alert: "Low Stock",
+    expiration: "2028-03-01",
+    remarks: "Organic",
   },
   {
     id: 19,
-    name: "Coffee Beans",
-    quantity: "8",
-    unit: "Kilograms",
-    alert: "In Stock",
-    expiration: "2028-12-12",
-    remarks: "Medium roast",
+    name: "Cocoa Powder",
+    quantity: "12",
+    unit: "Kilogram",
+    alert: "On Stock",
+    expiration: "2026-08-18",
+    remarks: "Dutch processed",
   },
   {
     id: 20,
-    name: "Vanilla Extract",
+    name: "Almond Milk",
     quantity: "2",
-    unit: "Liters",
+    unit: "Liter",
     alert: "Low Stock",
-    expiration: "2026-04-19",
-    remarks: "High-quality batch",
+    expiration: "2025-01-05",
+    remarks: "Unsweetened",
   },
 ];
 
 const Ingredients = () => {
-  const [query, setQuery] = React.useState("");
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [query, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
   const [showDelete, setShowDelete] = useState(false);
 
-  const filteredProducts = data.filter((order) =>
-    order.name.toLowerCase().includes(query.toLowerCase())
+  const filteredProducts = data.filter((item) =>
+    item.name.toLowerCase().includes(query.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -205,14 +204,6 @@ const Ingredients = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-
-  const handlePrevious = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
 
   const getStatusColor = (alert) => {
     switch (alert) {
@@ -230,14 +221,18 @@ const Ingredients = () => {
   const getExpirationColor = (expirationDate) => {
     const today = new Date();
     const expire = new Date(expirationDate);
-    const diffTime = expire - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.ceil((expire - today) / (1000 * 60 * 60 * 24));
     return diffDays <= 7 ? "text-red-600 font-semibold" : "text-black";
   };
 
   return (
-    <div className="p-6 h-screen flex flex-col">
-      <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow">
+    <div className="p-6 h-screen flex flex-col relative">
+      {/* Main Content */}
+      <div
+        className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
+          showDelete ? "blur-sm pointer-events-none" : ""
+        }`}
+      >
         <strong className="text-lg">Ingredients and Material List</strong>
 
         {/* Top Controls */}
@@ -278,106 +273,120 @@ const Ingredients = () => {
           </div>
         </div>
 
-        {/* Main Content Area */}
+        {/* Table */}
         <div className="mt-3 flex flex-col flex-grow">
-          {/* Table Container with Fixed Height */}
-          <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow">
-            {/* Fixed Table Header */}
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0">
+          <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
+            <div
+              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-280px)]"
+              style={{ scrollbarGutter: "stable" }}
+            >
+              <table
+                className="w-full text-sm rounded-lg table-fixed"
+                style={{ minWidth: "900px" }}
+              >
+                <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
                   <tr>
-                    <th className="p-1 min-w-[120px]">Name</th>
-                    <th className="p-1 min-w-[80px]">Quantity</th>
-                    <th className="p-1 min-w-[80px]">Unit</th>
-                    <th className="p-1 min-w-[120px]">Stock Status</th>
-                    <th className="p-1 min-w-[120px]">Expiration</th>
-                    <th className="p-1 min-w-[150px]">Remarks</th>
-                    <th className="p-1 w-[150px]">Actions</th>
+                    <th className="p-2 text-left w-[150px] rounded-tl-lg">
+                      NAME
+                    </th>
+                    <th className="p-2 text-center w-[80px]">QUANTITY</th>
+                    <th className="p-2 text-center w-[80px]">UNIT</th>
+                    <th className="p-2 text-center w-[120px]">STOCK STATUS</th>
+                    <th className="p-2 text-center w-[120px]">EXPIRATION</th>
+                    <th className="p-2 text-left w-[150px]">REMARKS</th>
+                    <th className="p-2 text-center w-[150px] rounded-tr-lg">
+                      ACTION
+                    </th>
                   </tr>
                 </thead>
-              </table>
-            </div>
-
-            {/* Scrollable Table Body */}
-            <div className="overflow-x-auto overflow-y-auto flex-grow min-h-0 max-h-[calc(100vh-280px)]">
-              <table className="w-full text-sm">
                 <tbody className="divide-y-3 divide-stone-100 text-center">
-                  {paginatedProducts.map((order) => (
-                    <tr key={order.id} className="hover:bg-gray-50">
-                      <td className="ml-4 font-semibold p-1 text-left flex items-center gap-2 min-w-[120px]">
-                        {order.name}
-                      </td>
-                      <td className="p-1 min-w-[80px]">{order.quantity}</td>
-                      <td className="p-1 min-w-[80px]">{order.unit}</td>
-                      <td className="p-1 min-w-[120px]">
-                        <span
-                          className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(
-                            order.alert
+                  {paginatedProducts.length > 0 ? (
+                    paginatedProducts.map((order) => (
+                      <tr key={order.id} className="hover:bg-gray-50">
+                        <td className="p-2 text-left w-[150px] font-semibold">
+                          {order.name}
+                        </td>
+                        <td className="p-2 w-[80px]">{order.quantity}</td>
+                        <td className="p-2 w-[80px]">{order.unit}</td>
+                        <td className="p-2 w-[120px]">
+                          <span
+                            className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(
+                              order.alert
+                            )}`}
+                          >
+                            {order.alert}
+                          </span>
+                        </td>
+                        <td
+                          className={`p-2 w-[120px] ${getExpirationColor(
+                            order.expiration
                           )}`}
                         >
-                          {order.alert}
-                        </span>
-                      </td>
-                      <td
-                        className={`p-2 min-w-[120px] ${getExpirationColor(
-                          order.expiration
-                        )}`}
-                      >
-                        {order.expiration}
-                      </td>
-                      <td className="p-1 text-left min-w-[150px]">
-                        {order.remarks}
-                      </td>
-                      <td className="p-1 w-[150px]">
-                        <div className="flex items-center justify-center gap-3">
-                          <button className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs">
-                            <FiEdit className="text-sm" />
-                            Edit
-                          </button>
-                          <button
-                            className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
-                            onClick={() => setShowDelete(true)}
-                          >
-                            <RiDeleteBin5Line className="text-sm" />
-                            Delete
-                          </button>
-                        </div>
+                          {order.expiration}
+                        </td>
+                        <td className="p-2 text-left w-[150px]">
+                          {order.remarks}
+                        </td>
+                        <td className="p-2 w-[150px]">
+                          <div className="flex items-center justify-center gap-3">
+                            <button className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs">
+                              <FiEdit className="text-sm" />
+                              Edit
+                            </button>
+                            <button
+                              className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
+                              onClick={() => setShowDelete(true)}
+                            >
+                              <RiDeleteBin5Line className="text-sm" />
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="7" className="p-4 text-center text-gray-500">
+                        No ingredient or materials found matching your search
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
+        </div>
 
-          {/* Pagination */}
-          <div className="mt-4">
-            <div className="flex justify-end">
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={handlePrevious}
-                  disabled={currentPage === 1}
-                  className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Previous
-                </button>
-                <span className="text-sm">
-                  Page {currentPage} of {totalPages}
-                </span>
-                <button
-                  onClick={handleNext}
-                  disabled={currentPage === totalPages}
-                  className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
+        {/* Pagination */}
+        <div className="mt-4 flex justify-end">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <span className="text-sm">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() =>
+                currentPage < totalPages && setCurrentPage(currentPage + 1)
+              }
+              disabled={currentPage === totalPages}
+              className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
           </div>
         </div>
       </div>
-      <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
+
+      {/* Delete Modal */}
+      {showDelete && (
+        <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
+      )}
     </div>
   );
 };
