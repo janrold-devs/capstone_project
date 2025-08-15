@@ -10,6 +10,7 @@ import {
   FaUser,
   FaTasks,
 } from "react-icons/fa";
+import DateRange from "../../components/DateRange";
 
 const data = [
   {
@@ -346,27 +347,18 @@ const Logs = () => {
           </div>
 
           {/* Date picker*/}
-          <div className="flex-1 max-w-xs relative">
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => {
-                setSelectedDate(e.target.value);
-                setCurrentPage(1);
-              }}
-              placeholder="Pick a date"
-              className="p-3 pr-10 pl-4 bg-gray-50 border border-gray-300 rounded-lg h-[38px] w-full text-gray-500 shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
-            />
-            <FaRegCalendarAlt className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-          </div>
+          <DateRange />
         </div>
 
         {/* Main Table */}
         <div className="mt-3 flex flex-col flex-grow">
           <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
-            <div className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-280px)]">
+            <div
+              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-280px)]"
+              style={{ scrollbarGutter: "stable" }}
+            >
               <table
-                className="w-full text-sm rounded-lg"
+                className="w-full text-sm rounded-lg table-fixed"
                 style={{ minWidth: "900px" }}
               >
                 <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">

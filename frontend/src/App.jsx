@@ -11,10 +11,9 @@ import Home from "./pages/Dashboard/Home";
 import Ingredients from "./pages/Dashboard/Ingredients";
 import Logs from "./pages/Dashboard/Logs";
 import Products from "./pages/Dashboard/Products";
-import Sales from "./pages/Dashboard/Sales";
+import Reports from "./pages/Dashboard/Reports";
 import Spoilage from "./pages/Dashboard/Spoilage";
 import Stocks from "./pages/Dashboard/Stocks";
-import Transactions from "./pages/Dashboard/Transactions";
 import Pos from "./pages/Dashboard/Pos";
 import Users from "./pages/Dashboard/Users";
 
@@ -31,10 +30,9 @@ const App = () => {
           <Route path="/dashboard/logs" element={<Logs />} />
           <Route path="/dashboard/pos" element={<Pos />} />
           <Route path="/dashboard/products" element={<Products />} />
-          <Route path="/dashboard/sales" element={<Sales />} />
+          <Route path="/dashboard/reports" element={<Reports />} />
           <Route path="/dashboard/spoilage" element={<Spoilage />} />
           <Route path="/dashboard/stocks" element={<Stocks />} />
-          <Route path="/dashboard/transactions" element={<Transactions />} />
           <Route path="/dashboard/users" element={<Users />} />
         </Routes>
       </Router>

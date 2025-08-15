@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Delete from "../../components/Delete";
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 import { FaFilePdf } from "react-icons/fa6";
@@ -138,161 +137,170 @@ const data = [
 ];
 
 const Spoilage = () => {
-  // State to hold the user's search input
-  const [query, setQuery] = React.useState("");
-
-  // State to track the current page number in pagination
-  const [currentPage, setCurrentPage] = React.useState(1);
-
-  // Number of products to display per page
+  const [query, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
-
-  // Filter the product list based on the user's search query
-  const filteredProducts = data.filter((order) =>
-    order.ingredient_materialName.toLowerCase().includes(query.toLowerCase())
-  );
-
-  // Calculate the total number of pages based on the filtered results
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-
-  // Get the products to be shown on the current page
-  const paginatedProducts = filteredProducts.slice(
-    (currentPage - 1) * itemsPerPage, // start index
-    currentPage * itemsPerPage // end index (non-inclusive)
-  );
-
-  // Function to go to the previous page
-  const handlePrevious = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  // Function to go to the next page
-  const handleNext = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
-
-  // Delete Modal
   const [showDelete, setShowDelete] = useState(false);
 
+  const filteredProducts = data.filter((item) =>
+    item.ingredient_materialName.toLowerCase().includes(query.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
-    <>
-      <div className="p-6 min-h-screen flex flex-col">
-        <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow">
-          <strong className="text-lg">Spoiled and Damaged List</strong>
+    <div className="p-6 h-screen flex flex-col relative">
+      {/* Main Content */}
+      <div
+        className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
+          showDelete ? "blur-sm pointer-events-none" : ""
+        }`}
+      >
+        <strong className="text-lg">Spoiled and Damaged List</strong>
 
-          {/* Top Controls Row */}
-          <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
-            {/* Buttons - Left Side */}
-            <div className="flex items-center gap-3">
-              {/* Add Button */}
-              <button className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md">
-                + Add Spoiled and Damaged Item
+        {/* Top Controls */}
+        <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
+          <div className="flex items-center gap-3">
+            <button className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md">
+              + Add Spoiled/Damaged Item
+            </button>
+            <div className="w-px h-8 bg-gray-300"></div>
+            <div className="flex items-center gap-2">
+              <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md">
+                <PiMicrosoftExcelLogoFill className="text-lg" />
+                Excel
               </button>
-
-              {/* Vertical Divider */}
-              <div className="w-px h-8 bg-gray-300"></div>
-
-              {/* Export Buttons */}
-              <div className="flex items-center gap-2">
-                <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md">
-                  <PiMicrosoftExcelLogoFill className="text-lg" />
-                  Excel
-                </button>
-
-                <button className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
-                  <FaFilePdf />
-                  PDF
-                </button>
-                <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
-                  <IoPrintSharp />
-                  Print
-                </button>
-              </div>
-            </div>
-
-            {/* Search Bar - Right Side */}
-            <div className="flex-1 max-w-xs relative">
-              <input
-                className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
-                type="text"
-                placeholder="Search by ingredient or material name"
-                value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value);
-                  setCurrentPage(1); // Reset to page 1 on search
-                }}
-              />
-              <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+              <button className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
+                <FaFilePdf />
+                PDF
+              </button>
+              <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
+                <IoPrintSharp />
+                Print
+              </button>
             </div>
           </div>
 
-          {/* Table */}
-          <div className="mt-3 overflow-x-auto flex-grow">
-            <table className="bg-white w-full text-sm border-collapse rounded-lg shadow-sm overflow-hidden">
-              <thead className="border-b-3 border-stone-100 text-center">
-                <tr>
-                  <th className="p-1">Person In Charge</th>
-                  <th className="p-1">Ingredient or Material Name</th>
-                  <th className="p-1">Quantity</th>
-                  <th className="p-1">Total Waste</th>
-                  <th className="p-1">Remarks</th>
-                  <th className="p-1">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y-3 divide-stone-100 text-center">
-                {paginatedProducts.map((order) => (
-                  <tr key={order.id}>
-                    <td className="p-1">{order.personInCharge}</td>
-                    <td className="p-1">{order.ingredient_materialName}</td>
-                    <td className="p-1">{order.quantity}</td>
-                    <td className="p-1">{order.totalWaste}</td>
-                    <td className="p-1">{order.remarks}</td>
-                    <td className="p-1 w-[150px]">
-                      <div className="flex items-center justify-center gap-3">
-                        <button
-                          className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
-                          onClick={() => setShowDelete(true)}
-                        >
-                          <RiDeleteBin5Line className="text-sm" />
-                          Delete
-                        </button>
-                      </div>
-                    </td>
+          <div className="flex-1 max-w-xs relative">
+            <input
+              className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
+              type="text"
+              placeholder="Search by Ingredient/Material"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setCurrentPage(1);
+              }}
+            />
+            <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+          </div>
+        </div>
+
+        {/* Table */}
+        <div className="mt-3 flex flex-col flex-grow">
+          <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
+            <div
+              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-280px)]"
+              style={{ scrollbarGutter: "stable" }}
+            >
+              <table
+                className="w-full text-sm rounded-lg table-fixed"
+                style={{ minWidth: "900px" }}
+              >
+                <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
+                  <tr>
+                    <th className="p-2 text-left w-[150px] rounded-tl-lg">
+                      PERSON IN CHARGE
+                    </th>
+                    <th className="p-2 text-left w-[200px]">
+                      INGREDIENT/MATERIAL
+                    </th>
+                    <th className="p-2 text-center w-[100px]">QUANTITY</th>
+                    <th className="p-2 text-center w-[100px]">TOTAL WASTE</th>
+                    <th className="p-2 text-left w-[200px] rounded-tr-lg">
+                      REMARKS
+                    </th>
+                    <th className="p-2 text-center w-[150px] rounded-tr-lg">
+                      ACTION
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Pagination Controls */}
-          <div className="mt-auto pt-4">
-            <div className="flex justify-end">
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={handlePrevious}
-                  disabled={currentPage === 1}
-                  className="px-3 py-1 hover:underline disabled:opacity-50"
-                >
-                  Previous
-                </button>
-                <span className="text-sm">
-                  Page {currentPage} of {totalPages}
-                </span>
-                <button
-                  onClick={handleNext}
-                  disabled={currentPage === totalPages}
-                  className="px-3 py-1 hover:underline disabled:opacity-50"
-                >
-                  Next
-                </button>
-              </div>
+                </thead>
+                <tbody className="divide-y-3 divide-stone-100 text-center">
+                  {paginatedProducts.length > 0 ? (
+                    paginatedProducts.map((order) => (
+                      <tr key={order.id} className="hover:bg-gray-50">
+                        <td className="p-2 text-left w-[150px] font-semibold">
+                          {order.personInCharge}
+                        </td>
+                        <td className="p-2 text-left w-[200px]">
+                          {order.ingredient_materialName}
+                        </td>
+                        <td className="p-2 w-[100px]">{order.quantity}</td>
+                        <td className="p-2 w-[100px]">{order.totalWaste}</td>
+                        <td className="p-2 text-left w-[200px]">
+                          {order.remarks}
+                        </td>
+                        <td className="p-2 w-[150px]">
+                          <div className="flex items-center justify-center gap-3">
+                            <button
+                              className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
+                              onClick={() => setShowDelete(true)}
+                            >
+                              <RiDeleteBin5Line className="text-sm" />
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" className="p-4 text-center text-gray-500">
+                        No spoiled or damaged items found matching your search
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
+
+        {/* Pagination */}
+        <div className="mt-4 flex justify-end">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <span className="text-sm">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() =>
+                currentPage < totalPages && setCurrentPage(currentPage + 1)
+              }
+              disabled={currentPage === totalPages}
+              className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+        </div>
       </div>
-      <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
-      giy
-    </>
+
+      {/* Delete Modal */}
+      {showDelete && (
+        <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
+      )}
+    </div>
   );
 };
 

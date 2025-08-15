@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Pos = () => {
-  return (
-    <div>Pos</div>
-  )
-}
+  return <div>Pos</div>;
+};
 
-export default Pos
+export default Pos;

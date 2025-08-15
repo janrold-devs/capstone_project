@@ -21,7 +21,9 @@ const Delete = ({ isVisible, onClose }) => {
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-semibold text-center mb-2">Delete Item</h3>
+        <h3 className="text-lg font-semibold text-center mb-2">
+          Confirm Delete
+        </h3>
 
         {/* Description */}
         <p className="text-gray-600 text-sm text-center mb-5">
