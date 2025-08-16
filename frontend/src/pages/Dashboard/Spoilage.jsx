@@ -204,7 +204,7 @@ const Spoilage = () => {
         <div className="mt-3 flex flex-col flex-grow">
           <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
             <div
-              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-280px)]"
+              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
               style={{ scrollbarGutter: "stable" }}
             >
               <table

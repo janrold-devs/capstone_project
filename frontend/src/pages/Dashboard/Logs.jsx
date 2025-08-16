@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { FaRegCircleUser } from "react-icons/fa6";
 import {
@@ -15,7 +15,7 @@ import DateRange from "../../components/DateRange";
 const data = [
   {
     id: 1,
-    date: "June 13, 2025",
+    date: "June 14, 2025",
     time: "02:30 PM",
     user: "Admin",
     action: "Created",
@@ -24,7 +24,7 @@ const data = [
   },
   {
     id: 2,
-    date: "June 13, 2025",
+    date: "June 19, 2025",
     time: "02:15 PM",
     user: "Manager",
     action: "Updated",
@@ -33,7 +33,7 @@ const data = [
   },
   {
     id: 3,
-    date: "June 13, 2025",
+    date: "June 3, 2025",
     time: "01:45 PM",
     user: "Admin",
     action: "Deleted",
@@ -42,7 +42,7 @@ const data = [
   },
   {
     id: 4,
-    date: "June 13, 2025",
+    date: "June 25, 2025",
     time: "01:30 PM",
     user: "Staff",
     action: "Created",
@@ -51,7 +51,7 @@ const data = [
   },
   {
     id: 5,
-    date: "June 13, 2025",
+    date: "June 1, 2025",
     time: "01:15 PM",
     user: "Manager",
     action: "Updated",
@@ -60,7 +60,7 @@ const data = [
   },
   {
     id: 6,
-    date: "June 13, 2025",
+    date: "July 2, 2025",
     time: "01:00 PM",
     user: "Admin",
     action: "Created",
@@ -78,7 +78,7 @@ const data = [
   },
   {
     id: 8,
-    date: "June 13, 2025",
+    date: "August 13, 2025",
     time: "12:30 PM",
     user: "Manager",
     action: "Deleted",
@@ -87,7 +87,7 @@ const data = [
   },
   {
     id: 9,
-    date: "June 13, 2025",
+    date: "June 23, 2025",
     time: "12:15 PM",
     user: "Admin",
     action: "Created",
@@ -96,7 +96,7 @@ const data = [
   },
   {
     id: 10,
-    date: "June 13, 2025",
+    date: "June 3, 2025",
     time: "12:00 PM",
     user: "Staff",
     action: "Updated",
@@ -199,7 +199,7 @@ const Logs = () => {
   const [query, setQuery] = React.useState("");
   const [userFilter, setUserFilter] = React.useState("All Users");
   const [actionFilter, setActionFilter] = React.useState("All Actions");
-  const [selectedDate, setSelectedDate] = React.useState("");
+  const [dateRange, setDateRange] = useState(null);
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 15;
 
@@ -215,14 +215,12 @@ const Logs = () => {
       userFilter === "All Users" || order.user === userFilter;
     const matchesActionFilter =
       actionFilter === "All Actions" || order.action === actionFilter;
+    const orderDate = new Date(order.date + " " + order.time);
     const matchesDateFilter =
-      !selectedDate ||
-      order.date ===
-        new Date(selectedDate).toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-        });
+      !dateRange ||
+      (orderDate >= new Date(dateRange.startDate) &&
+        orderDate <=
+          new Date(new Date(dateRange.endDate).setHours(23, 59, 59, 999)));
     return (
       matchesSearch &&
       matchesUserFilter &&
@@ -347,14 +345,19 @@ const Logs = () => {
           </div>
 
           {/* Date picker*/}
-          <DateRange />
+          <DateRange
+            onDateChange={(range) => {
+              setDateRange(range);
+              setCurrentPage(1);
+            }}
+          />
         </div>
 
         {/* Main Table */}
         <div className="mt-3 flex flex-col flex-grow">
           <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
             <div
-              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-280px)]"
+              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
               style={{ scrollbarGutter: "stable" }}
             >
               <table
@@ -388,7 +391,7 @@ const Logs = () => {
                         {/* User */}
                         <td className="p-2 w-[130px]">
                           <div className="flex items-center justify-left gap-1">
-                            <FaRegCircleUser className="w-[25px] h-[25px] text-gray-400 flex-shrink-0" />
+                            <FaRegCircleUser className="w-[25px] h-[25px] text-gray-300 flex-shrink-0" />
                             <span className="truncate">{order.user}</span>
                           </div>
                         </td>

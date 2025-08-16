@@ -145,7 +145,7 @@ const Users = () => {
               </button>
             </div>
           </div>
-
+          {/* Search BAR */}
           <div className="flex-1 max-w-xs relative">
             <input
               className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
@@ -165,7 +165,7 @@ const Users = () => {
         <div className="mt-3 flex flex-col flex-grow">
           <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
             <div
-              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-280px)]"
+              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
               style={{ scrollbarGutter: "stable" }}
             >
               <table

@@ -70,6 +70,60 @@ const data = [
     stockmanName: "Nathaniel Ramos",
     date: "March 11, 2024",
   },
+  {
+    id: 12,
+    batchNumber: 202000112,
+    stockmanName: "Olivia Chen",
+    date: "March 14, 2024",
+  },
+  {
+    id: 13,
+    batchNumber: 202000113,
+    stockmanName: "Patrick O'Reilly",
+    date: "March 17, 2024",
+  },
+  {
+    id: 14,
+    batchNumber: 202000114,
+    stockmanName: "Quinn Harrison",
+    date: "March 20, 2024",
+  },
+  {
+    id: 15,
+    batchNumber: 202000115,
+    stockmanName: "Rachel Simmons",
+    date: "March 23, 2024",
+  },
+  {
+    id: 16,
+    batchNumber: 202000116,
+    stockmanName: "Samuel Torres",
+    date: "March 26, 2024",
+  },
+  {
+    id: 17,
+    batchNumber: 202000117,
+    stockmanName: "Tiffany Wong",
+    date: "March 29, 2024",
+  },
+  {
+    id: 18,
+    batchNumber: 202000118,
+    stockmanName: "Umar Khan",
+    date: "April 1, 2024",
+  },
+  {
+    id: 19,
+    batchNumber: 202000119,
+    stockmanName: "Victoria Adams",
+    date: "April 4, 2024",
+  },
+  {
+    id: 20,
+    batchNumber: 202000120,
+    stockmanName: "William Zhang",
+    date: "April 7, 2024",
+  },
 ];
 
 const Stocks = () => {
@@ -135,7 +189,7 @@ const Stocks = () => {
         <div className="mt-3 flex flex-col flex-grow">
           <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
             <div
-              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-280px)]"
+              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
               style={{ scrollbarGutter: "stable" }}
             >
               <table
