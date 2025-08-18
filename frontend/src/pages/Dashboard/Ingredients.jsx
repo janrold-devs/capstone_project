@@ -234,7 +234,7 @@ const Ingredients = () => {
       {/* Main Content */}
       <div
         className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
-          showDelete || showAdd ? "blur-sm pointer-events-none" : ""
+          showDelete || showAdd || showEdit ? "blur-sm pointer-events-none" : ""
         }`}
       >
         <strong className="text-lg">Ingredients and Material List</strong>
@@ -338,7 +338,7 @@ const Ingredients = () => {
                           <div className="flex items-center justify-center gap-3">
                             <button
                               className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs"
-                              onClick={() => setShowAdd(true)}
+                              onClick={() => setShowEdit(true)}
                             >
                               <FiEdit className="text-sm" />
                               Edit

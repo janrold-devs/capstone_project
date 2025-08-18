@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 import { FaFilePdf } from "react-icons/fa6";
 import { IoPrintSharp, IoSearch } from "react-icons/io5";
+import AddForm from "../../components/StockForm/AddForm";
 
 const data = [
   {
@@ -129,6 +130,7 @@ const data = [
 const Stocks = () => {
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [showAdd, setShowAdd] = useState(false);
   const itemsPerPage = 15;
 
   const filteredProducts = data.filter((item) =>
@@ -144,13 +146,20 @@ const Stocks = () => {
   return (
     <div className="p-6 h-screen flex flex-col relative">
       {/* Main Content */}
-      <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow">
+      <div
+        className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
+          showAdd ? "blur-sm pointer-events-none" : ""
+        }`}
+      >
         <strong className="text-lg">Stock List</strong>
 
         {/* Top Controls */}
         <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
           <div className="flex items-center gap-3">
-            <button className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md">
+            <button
+              className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md"
+              onClick={() => setShowAdd(true)}
+            >
               + Add Stock
             </button>
             <div className="w-px h-8 bg-gray-300"></div>
@@ -260,6 +269,10 @@ const Stocks = () => {
           </div>
         </div>
       </div>
+      {/* Add User Form */}
+      {showAdd && (
+        <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
+      )}
     </div>
   );
 };

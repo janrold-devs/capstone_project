@@ -5,6 +5,8 @@ import { FaFilePdf, FaRegCircleUser } from "react-icons/fa6";
 import { IoPrintSharp, IoSearch } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import AddForm from "../../components/UserForms/AddForm";
+import EditForm from "../../components/UserForms/EditForm";
 
 const data = [
   {
@@ -102,6 +104,8 @@ const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
   const [showDelete, setShowDelete] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
   const filteredProducts = data.filter((item) =>
     item.firstname.toLowerCase().includes(query.toLowerCase())
@@ -118,7 +122,7 @@ const Users = () => {
       {/* Main Content */}
       <div
         className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
-          showDelete ? "blur-sm pointer-events-none" : ""
+          showDelete || showAdd || showEdit ? "blur-sm pointer-events-none" : ""
         }`}
       >
         <strong className="text-lg">User Management</strong>
@@ -126,7 +130,10 @@ const Users = () => {
         {/* Top Controls */}
         <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
           <div className="flex items-center gap-3">
-            <button className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md">
+            <button
+              className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md"
+              onClick={() => setShowAdd(true)}
+            >
               + Add User
             </button>
             <div className="w-px h-8 bg-gray-300"></div>
@@ -211,7 +218,10 @@ const Users = () => {
                         <td className="p-2 w-[150px]">
                           <div className="flex items-center justify-center gap-3">
                             <button className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs">
-                              <FiEdit className="text-sm" />
+                              <FiEdit
+                                className="text-sm"
+                                onClick={() => setShowAdd(true)}
+                              />
                               Edit
                             </button>
                             <button
@@ -267,6 +277,16 @@ const Users = () => {
       {/* Delete Modal */}
       {showDelete && (
         <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
+      )}
+
+      {/* Add User Form */}
+      {showAdd && (
+        <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
+      )}
+
+      {/* Edit Form */}
+      {showEdit && (
+        <EditForm isVisible={showEdit} onClose={() => setShowEdit(false)} />
       )}
     </div>
   );

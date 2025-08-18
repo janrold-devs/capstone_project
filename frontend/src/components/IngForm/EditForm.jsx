@@ -1,6 +1,6 @@
 import React from "react";
 import fBg from "../../assets/images/f-bg.png";
-import UnitDropdown from "../UnitDropdown";
+import UnitDropdown from "../Dropdowns/UnitDropdown";
 
 const AddForm = ({ isVisible, onClose }) => {
   if (!isVisible) return null;
@@ -29,7 +29,7 @@ const AddForm = ({ isVisible, onClose }) => {
         <div className="relative z-10">
           {/* Title */}
           <h3 className="text-lg font-semibold text-center mb-4 text-[#3E2C20] drop-shadow">
-            Edit Ingredient or Material
+            Add New Ingredient or Material
           </h3>
 
           {/* Two-column layout */}
@@ -40,24 +40,24 @@ const AddForm = ({ isVisible, onClose }) => {
                 type="text"
                 placeholder="Name"
                 required
-                className="w-[25rem] px-3 py-2 bg-[#CEB28D] text-[#6D482E] 
+                className="w-full max-w-md px-3 py-2 bg-[#CEB28D] text-[#6D482E] 
                 placeholder-[#6D482E] font-semibold rounded-lg shadow-sm 
                 focus:outline-none focus:ring-2 focus:ring-[#A67C59]"
               />
               <UnitDropdown />
               <input
-                type="text"
+                type="number"
                 placeholder="Current Stock"
                 required
-                className="w-[25rem] px-3 py-2 bg-[#CEB28D] text-[#6D482E] 
+                className="w-full max-w-md px-3 py-2 bg-[#CEB28D] text-[#6D482E] 
                 placeholder-[#6D482E] font-semibold rounded-lg shadow-sm 
                 focus:outline-none focus:ring-2 focus:ring-[#A67C59]"
               />
               <input
-                type="text"
+                type="number"
                 placeholder="Alert Stock"
                 required
-                className="w-[25rem] px-3 py-2 bg-[#CEB28D] text-[#6D482E] 
+                className="w-full max-w-md px-3 py-2 bg-[#CEB28D] text-[#6D482E] 
                 placeholder-[#6D482E] font-semibold rounded-lg shadow-sm 
                 focus:outline-none focus:ring-2 focus:ring-[#A67C59]"
               />
@@ -69,23 +69,23 @@ const AddForm = ({ isVisible, onClose }) => {
                 type="date"
                 placeholder="Expiration Date"
                 required
-                className="w-[25rem] px-3 py-2 bg-[#CEB28D] text-[#6D482E] 
-                placeholder-[#6D482E] font-semibold rounded-lg shadow-sm 
+                className="w-full max-w-md px-3 py-2 bg-[#CEB28D] text-[#6D482E] 
+                font-semibold rounded-lg shadow-sm 
                 focus:outline-none focus:ring-2 focus:ring-[#A67C59]"
               />
               <input
                 type="text"
                 placeholder="Batch Number"
                 required
-                className="w-[25rem] px-3 py-2 bg-[#CEB28D] text-[#6D482E] 
-                placeholder-[#6D482E] font-semibold rounded-lg shadow-lg 
+                className="w-full max-w-md px-3 py-2 bg-[#CEB28D] text-[#6D482E] 
+                placeholder-[#6D482E] font-semibold rounded-lg shadow-sm 
                 focus:outline-none focus:ring-2 focus:ring-[#A67C59]"
               />
               <textarea
                 placeholder="Description"
                 required
-                className="w-[25rem] h-[5.8rem] px-3 py-2 bg-[#CEB28D] text-[#6D482E] 
-                placeholder-[#6D482E] font-semibold rounded-lg shadow-lg 
+                className="w-full max-w-md h-[5.8rem] px-3 py-2 bg-[#CEB28D] text-[#6D482E] 
+                placeholder-[#6D482E] font-semibold rounded-lg shadow-sm 
                 focus:outline-none focus:ring-2 focus:ring-[#A67C59] resize-none"
               />
             </div>
@@ -101,6 +101,7 @@ const AddForm = ({ isVisible, onClose }) => {
               Cancel
             </button>
             <button
+              type="submit"
               className="bg-blue-500 text-white shadow-lg rounded px-4 py-2 
               text-sm font-medium hover:bg-blue-600"
             >
