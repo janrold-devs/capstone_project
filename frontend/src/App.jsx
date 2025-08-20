@@ -16,6 +16,8 @@ import Spoilage from "./pages/Dashboard/Spoilage";
 import Stocks from "./pages/Dashboard/Stocks";
 import Pos from "./pages/Dashboard/Pos";
 import Users from "./pages/Dashboard/Users";
+import TransactionHistoryReport from "./pages/Dashboard/TransactionHistory";
+import ItemTracker from "./pages/Dashboard/ItemTracker";
 
 const App = () => {
   return (
@@ -27,8 +29,13 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Home />} />
           <Route path="/dashboard/ingredients" element={<Ingredients />} />
+          <Route path="/dashboard/tracker" element={<ItemTracker />} />
           <Route path="/dashboard/logs" element={<Logs />} />
           <Route path="/dashboard/pos" element={<Pos />} />
+          <Route
+            path="/dashboard/transactions"
+            element={<TransactionHistoryReport />}
+          />
           <Route path="/dashboard/products" element={<Products />} />
           <Route path="/dashboard/reports" element={<Reports />} />
           <Route path="/dashboard/spoilage" element={<Spoilage />} />

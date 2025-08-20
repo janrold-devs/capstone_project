@@ -11,20 +11,28 @@ import SpoilageReport from "../../components/Reports/SpoilageReport";
 import StocksReport from "../../components/Reports/StocksReport";
 
 const Reports = () => {
+  // State to manage delete modal visibility
   const [showDelete, setShowDelete] = useState(false);
+
+  // State to track which report category is selected
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  /**
+   * Function to dynamically render the correct report
+   * based on the category chosen from the dropdown.
+   */
   const renderTable = () => {
     switch (selectedCategory) {
       case "sales":
-        return <SalesReport />; // handles its own pagination
+        return <SalesReport />; // Sales report component (handles its own pagination)
       case "stocks":
-        return <StocksReport />;
+        return <StocksReport />; // Stocks report component
       case "spoiled and damaged":
-        return <SpoilageReport />;
+        return <SpoilageReport />; // Spoilage/damage report component
       case "sales activity":
-        return <SalesActivity />;
+        return <SalesActivity />; // Sales activity logs
       default:
+        // Placeholder when no category is selected
         return (
           <div className="p-8 text-center text-gray-500 flex-1 flex items-center justify-center">
             <div>
@@ -44,6 +52,7 @@ const Reports = () => {
 
   return (
     <div className="p-6 h-screen flex flex-col relative">
+      {/* Main container with blur effect when delete modal is open */}
       <div
         className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
           showDelete ? "blur-sm pointer-events-none" : ""
@@ -51,10 +60,10 @@ const Reports = () => {
       >
         <strong className="text-lg">Reports</strong>
 
-        {/* Top Controls */}
+        {/* ---------------- Top Controls ---------------- */}
         <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
           <div className="flex items-center gap-3">
-            {/* Category Dropdown */}
+            {/* Category Dropdown to select report type */}
             <div className="relative">
               <BiCategory className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
               <select
@@ -72,8 +81,10 @@ const Reports = () => {
               </select>
             </div>
 
+            {/* Divider Line */}
             <div className="w-px h-8 bg-gray-300"></div>
 
+            {/* Export Buttons (Excel, PDF, Print) */}
             <div className="flex items-center gap-2">
               <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md transition-colors">
                 <PiMicrosoftExcelLogoFill className="text-lg" />
@@ -90,17 +101,17 @@ const Reports = () => {
             </div>
           </div>
 
-          {/* Date Range */}
+          {/* Date Range Picker (custom component) */}
           <DateRange />
         </div>
 
-        {/* Table Area */}
+        {/* ---------------- Report Display Area ---------------- */}
         <div className="mt-4 flex-1 bg-white rounded-lg shadow-sm overflow-hidden">
           {renderTable()}
         </div>
       </div>
 
-      {/* Delete Modal */}
+      {/* ---------------- Delete Modal ---------------- */}
       {showDelete && (
         <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
       )}

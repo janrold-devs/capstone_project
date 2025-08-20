@@ -8,6 +8,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import AddForm from "../../components/IngForm/AddForm";
 import EditForm from "../../components/IngForm/EditForm";
 
+// -------------------- Sample Ingredient/Material Data --------------------
 const data = [
   {
     id: 1,
@@ -191,24 +192,30 @@ const data = [
   },
 ];
 
+// -------------------- Main Component --------------------
 const Ingredients = () => {
-  const [query, setQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 15;
-  const [showDelete, setShowDelete] = useState(false);
-  const [showAdd, setShowAdd] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
+  // -------------------- State Management --------------------
+  const [query, setQuery] = useState(""); // search query for filtering
+  const [currentPage, setCurrentPage] = useState(1); // pagination tracker
+  const itemsPerPage = 15; // items per page
+  const [showDelete, setShowDelete] = useState(false); // delete modal
+  const [showAdd, setShowAdd] = useState(false); // add modal
+  const [showEdit, setShowEdit] = useState(false); // edit modal
 
+  // -------------------- Filtering & Pagination --------------------
   const filteredProducts = data.filter((item) =>
     item.name.toLowerCase().includes(query.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
+  // -------------------- Helpers --------------------
+  // Set badge color based on stock status
   const getStatusColor = (alert) => {
     switch (alert) {
       case "On Stock":
@@ -222,6 +229,7 @@ const Ingredients = () => {
     }
   };
 
+  // Highlight expiration date if within 7 days
   const getExpirationColor = (expirationDate) => {
     const today = new Date();
     const expire = new Date(expirationDate);
@@ -231,7 +239,7 @@ const Ingredients = () => {
 
   return (
     <div className="p-6 h-screen flex flex-col relative">
-      {/* Main Content */}
+      {/* -------------------- Main Table Content -------------------- */}
       <div
         className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
           showDelete || showAdd || showEdit ? "blur-sm pointer-events-none" : ""
@@ -239,8 +247,9 @@ const Ingredients = () => {
       >
         <strong className="text-lg">Ingredients and Material List</strong>
 
-        {/* Top Controls */}
+        {/* -------------------- Top Controls -------------------- */}
         <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
+          {/* Left-side: Add button + Export buttons */}
           <div className="flex items-center gap-3">
             <button
               className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md"
@@ -248,7 +257,11 @@ const Ingredients = () => {
             >
               + Add Ingredient and Material
             </button>
+
+            {/* Divider line */}
             <div className="w-px h-8 bg-gray-300"></div>
+
+            {/* Export buttons */}
             <div className="flex items-center gap-2">
               <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md">
                 <PiMicrosoftExcelLogoFill className="text-lg" />
@@ -264,7 +277,8 @@ const Ingredients = () => {
               </button>
             </div>
           </div>
-          {/* Search Bar */}
+
+          {/* Right-side: Search Bar */}
           <div className="flex-1 max-w-xs relative">
             <input
               className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
@@ -273,14 +287,14 @@ const Ingredients = () => {
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);
-                setCurrentPage(1);
+                setCurrentPage(1); // reset to first page on search
               }}
             />
             <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
           </div>
         </div>
 
-        {/* Table */}
+        {/* -------------------- Table -------------------- */}
         <div className="mt-3 flex flex-col flex-grow">
           <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
             <div
@@ -291,6 +305,7 @@ const Ingredients = () => {
                 className="w-full text-sm rounded-lg table-fixed"
                 style={{ minWidth: "900px" }}
               >
+                {/* Table Head */}
                 <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
                   <tr>
                     <th className="p-2 text-left w-[150px] rounded-tl-lg">
@@ -306,6 +321,8 @@ const Ingredients = () => {
                     </th>
                   </tr>
                 </thead>
+
+                {/* Table Body */}
                 <tbody className="divide-y-3 divide-stone-100 text-center">
                   {paginatedProducts.length > 0 ? (
                     paginatedProducts.map((order) => (
@@ -336,6 +353,7 @@ const Ingredients = () => {
                         </td>
                         <td className="p-2 w-[150px]">
                           <div className="flex items-center justify-center gap-3">
+                            {/* Edit Button */}
                             <button
                               className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs"
                               onClick={() => setShowEdit(true)}
@@ -343,6 +361,7 @@ const Ingredients = () => {
                               <FiEdit className="text-sm" />
                               Edit
                             </button>
+                            {/* Delete Button */}
                             <button
                               className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
                               onClick={() => setShowDelete(true)}
@@ -355,6 +374,7 @@ const Ingredients = () => {
                       </tr>
                     ))
                   ) : (
+                    // Empty state if no matches found
                     <tr>
                       <td colSpan="7" className="p-4 text-center text-gray-500">
                         No ingredient or materials found matching your search
@@ -367,7 +387,7 @@ const Ingredients = () => {
           </div>
         </div>
 
-        {/* Pagination */}
+        {/* -------------------- Pagination -------------------- */}
         <div className="mt-4 flex justify-end">
           <div className="flex items-center gap-4">
             <button
@@ -393,17 +413,13 @@ const Ingredients = () => {
         </div>
       </div>
 
-      {/* Delete Modal */}
+      {/* -------------------- Modals -------------------- */}
       {showDelete && (
         <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
       )}
-
-      {/* ADD ING/MAT FORM */}
       {showAdd && (
         <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
       )}
-
-      {/* EDIT ING/MAT FORM */}
       {showEdit && (
         <EditForm isVisible={showEdit} onClose={() => setShowEdit(false)} />
       )}

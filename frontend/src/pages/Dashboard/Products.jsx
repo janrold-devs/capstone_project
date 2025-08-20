@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import Delete from "../../components/Delete";
+import Delete from "../../components/Delete"; // Delete confirmation modal
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 import { FaFilePdf } from "react-icons/fa6";
 import { IoPrintSharp, IoSearch } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import AddForm from "../../components/ProductForms/AddForm";
-import EditForm from "../../components/ProductForms/EditForm";
+import AddForm from "../../components/ProductForms/AddForm"; // Add new product form
+import EditForm from "../../components/ProductForms/EditForm"; // Edit existing product form
 
+// --- Sample Product Data (mock data for now) ---
 const data = [
   {
     id: 1,
@@ -212,25 +213,28 @@ const data = [
 ];
 
 const Products = () => {
-  const [query, setQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showDelete, setShowDelete] = useState(false);
-  const [showAdd, setShowAdd] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
+  // --- States ---
+  const [query, setQuery] = useState(""); // Search input value
+  const [currentPage, setCurrentPage] = useState(1); // Pagination current page
+  const [showDelete, setShowDelete] = useState(false); // Toggle delete modal
+  const [showAdd, setShowAdd] = useState(false); // Toggle add product modal
+  const [showEdit, setShowEdit] = useState(false); // Toggle edit product modal
 
-  const itemsPerPage = 15;
+  const itemsPerPage = 15; // Number of products per page
 
+  // --- Filtering Products (search by name) ---
   const filteredProducts = data.filter((order) =>
     order.productName.toLowerCase().includes(query.toLowerCase())
   );
 
+  // --- Pagination logic ---
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
+  // --- Pagination navigation ---
   const handlePrevious = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
@@ -239,6 +243,7 @@ const Products = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
+  // --- Status badge styling ---
   const getStatusColor = (status) => {
     switch (status) {
       case "Available":
@@ -252,25 +257,31 @@ const Products = () => {
 
   return (
     <>
+      {/* Main Content Wrapper */}
       <div
         className={`p-6 min-h-screen flex flex-col transition-all duration-300 ${
-          showDelete || showAdd || showEdit ? "blur-sm" : ""
+          showDelete || showAdd || showEdit ? "blur-sm" : "" // Blur background when modal is active
         }`}
       >
         <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow">
           <strong className="text-lg">Product List</strong>
 
-          {/* Top Controls */}
+          {/* --- Top Controls (Add, Export, Search) --- */}
           <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
-            {/* Left Controls */}
+            {/* Left Controls: Add + Export Buttons */}
             <div className="flex items-center gap-3">
+              {/* Add Product Button */}
               <button
                 className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md"
                 onClick={() => setShowAdd(true)}
               >
                 + Add Product
               </button>
+
+              {/* Divider */}
               <div className="w-px h-8 bg-gray-300"></div>
+
+              {/* Export Buttons */}
               <div className="flex items-center gap-2">
                 <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md">
                   <PiMicrosoftExcelLogoFill className="text-lg" />
@@ -287,7 +298,7 @@ const Products = () => {
               </div>
             </div>
 
-            {/* Search */}
+            {/* Search Bar */}
             <div className="flex-1 max-w-xs relative">
               <input
                 className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
@@ -296,14 +307,14 @@ const Products = () => {
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
-                  setCurrentPage(1);
+                  setCurrentPage(1); // Reset to page 1 when searching
                 }}
               />
               <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
           </div>
 
-          {/* Table */}
+          {/* --- Table Section --- */}
           <div className="mt-3 flex flex-col flex-grow">
             <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
               <div
@@ -314,6 +325,7 @@ const Products = () => {
                   className="w-full text-sm rounded-lg table-fixed"
                   style={{ minWidth: "900px" }}
                 >
+                  {/* Table Header */}
                   <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
                     <tr>
                       <th className="p-1 text-left w-[280px]">Product Name</th>
@@ -325,10 +337,13 @@ const Products = () => {
                       <th className="p-1 w-[170px]">Actions</th>
                     </tr>
                   </thead>
+
+                  {/* Table Body */}
                   <tbody className="divide-y-3 divide-stone-100 text-center">
                     {paginatedProducts.length > 0 ? (
                       paginatedProducts.map((order) => (
                         <tr key={order.id}>
+                          {/* Product Name + Image */}
                           <td className="p-1 text-left flex items-center gap-2 w-[280px]">
                             {order.image ? (
                               <img
@@ -345,8 +360,14 @@ const Products = () => {
                               {order.productName}
                             </span>
                           </td>
+
+                          {/* Size */}
                           <td className="p-1 w-[90px]">{order.Size}</td>
+
+                          {/* Price */}
                           <td className="p-1 w-[90px]">₱{order.price}</td>
+
+                          {/* Ingredients (badges) */}
                           <td className="p-1 w-[320px]">
                             {Array.isArray(order.ingredients) ? (
                               <div className="flex flex-wrap gap-1 justify-center">
@@ -363,7 +384,11 @@ const Products = () => {
                               order.ingredients
                             )}
                           </td>
+
+                          {/* Category */}
                           <td className="p-1 w-[140px]">{order.category}</td>
+
+                          {/* Status Badge */}
                           <td className="p-1 w-[110px]">
                             <span
                               className={`px-1 py-1 rounded text-xs shadow-sm font-medium ${getStatusColor(
@@ -373,8 +398,11 @@ const Products = () => {
                               {order.status}
                             </span>
                           </td>
+
+                          {/* Action Buttons */}
                           <td className="p-1 w-[170px]">
                             <div className="flex items-center justify-center gap-3">
+                              {/* Edit Button */}
                               <button
                                 className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs"
                                 onClick={() => setShowEdit(true)}
@@ -382,6 +410,7 @@ const Products = () => {
                                 <FiEdit className="text-sm" />
                                 Edit
                               </button>
+                              {/* Delete Button */}
                               <button
                                 className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
                                 onClick={() => setShowDelete(true)}
@@ -394,6 +423,7 @@ const Products = () => {
                         </tr>
                       ))
                     ) : (
+                      // Fallback if no product matches search
                       <tr>
                         <td
                           colSpan="7"
@@ -408,7 +438,7 @@ const Products = () => {
               </div>
             </div>
 
-            {/* Pagination */}
+            {/* --- Pagination --- */}
             <div className="mt-auto pt-4">
               <div className="flex justify-end">
                 <div className="flex items-center gap-4">
@@ -436,15 +466,16 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Delete Modal */}
+      {/* --- Modals --- */}
+      {/* Delete Confirmation */}
       <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
 
-      {/* ADD NEW PRODUCT FORM */}
+      {/* Add Product Form */}
       {showAdd && (
         <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
       )}
 
-      {/* EDIT PRODUCT FORM */}
+      {/* Edit Product Form */}
       {showEdit && (
         <EditForm isVisible={showEdit} onClose={() => setShowEdit(false)} />
       )}

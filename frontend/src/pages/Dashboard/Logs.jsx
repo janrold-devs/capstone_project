@@ -6,12 +6,12 @@ import {
   FaEdit,
   FaTrashAlt,
   FaEye,
-  FaRegCalendarAlt,
   FaUser,
   FaTasks,
 } from "react-icons/fa";
-import DateRange from "../../components/DateRange";
+import DateRange from "../../components/DateRange"; // Custom date picker component
 
+// Sample activity log data
 const data = [
   {
     id: 1,
@@ -22,205 +22,49 @@ const data = [
     details: "Added new product 'Taro Bliss'-16 oz-₱85",
     status: "Success",
   },
-  {
-    id: 2,
-    date: "June 19, 2025",
-    time: "02:15 PM",
-    user: "Manager",
-    action: "Updated",
-    details: "Modified product 'Strawberry Delight'-12 oz-₱75",
-    status: "Success",
-  },
-  {
-    id: 3,
-    date: "June 3, 2025",
-    time: "01:45 PM",
-    user: "Admin",
-    action: "Deleted",
-    details: "Removed product 'Old Flavor'-8 oz-₱60",
-    status: "Failed",
-  },
-  {
-    id: 4,
-    date: "June 25, 2025",
-    time: "01:30 PM",
-    user: "Staff",
-    action: "Created",
-    details: "Added new product 'Mango Supreme'-20 oz-₱95",
-    status: "Success",
-  },
-  {
-    id: 5,
-    date: "June 1, 2025",
-    time: "01:15 PM",
-    user: "Manager",
-    action: "Updated",
-    details: "Modified inventory for 'Chocolate Fudge'-14 oz-₱80",
-    status: "Success",
-  },
-  {
-    id: 6,
-    date: "July 2, 2025",
-    time: "01:00 PM",
-    user: "Admin",
-    action: "Created",
-    details: "Added new product 'Vanilla Dream'-16 oz-₱85",
-    status: "Success",
-  },
-  {
-    id: 7,
-    date: "June 13, 2025",
-    time: "12:45 PM",
-    user: "Staff",
-    action: "Updated",
-    details: "Modified product 'Berry Blast'-10 oz-₱70",
-    status: "Success",
-  },
-  {
-    id: 8,
-    date: "August 13, 2025",
-    time: "12:30 PM",
-    user: "Manager",
-    action: "Deleted",
-    details: "Removed expired product 'Winter Special'-12 oz-₱65",
-    status: "Success",
-  },
-  {
-    id: 9,
-    date: "June 23, 2025",
-    time: "12:15 PM",
-    user: "Admin",
-    action: "Created",
-    details: "Added new product 'Tropical Mix'-18 oz-₱90",
-    status: "Success",
-  },
-  {
-    id: 10,
-    date: "June 3, 2025",
-    time: "12:00 PM",
-    user: "Staff",
-    action: "Updated",
-    details: "Modified pricing for 'Classic Vanilla'-16 oz-₱85",
-    status: "Failed",
-  },
-  {
-    id: 11,
-    date: "June 13, 2025",
-    time: "12:15 PM",
-    user: "Manager",
-    action: "Approved",
-    details: "Approved new inventory shipment",
-    status: "Completed",
-  },
-  {
-    id: 12,
-    date: "June 13, 2025",
-    time: "1:30 PM",
-    user: "Staff",
-    action: "Created",
-    details: "Added new product 'Caramel Latte'-12 oz-₱95",
-    status: "Pending",
-  },
-  {
-    id: 13,
-    date: "June 13, 2025",
-    time: "2:45 PM",
-    user: "Staff",
-    action: "Deleted",
-    details: "Removed expired product 'Matcha Frappe'-12 oz",
-    status: "Completed",
-  },
-  {
-    id: 14,
-    date: "June 13, 2025",
-    time: "3:20 PM",
-    user: "System",
-    action: "Automatic",
-    details: "Daily sales report generated",
-    status: "Completed",
-  },
-  {
-    id: 15,
-    date: "June 13, 2025",
-    time: "4:05 PM",
-    user: "Staff",
-    action: "Updated",
-    details: "Changed opening hours for weekends",
-    status: "Pending",
-  },
-  {
-    id: 16,
-    date: "June 14, 2025",
-    time: "9:00 AM",
-    user: "Manager",
-    action: "Approved",
-    details: "Approved staff schedule changes",
-    status: "Completed",
-  },
-  {
-    id: 17,
-    date: "June 14, 2025",
-    time: "10:30 AM",
-    user: "Staff",
-    action: "Created",
-    details: "Added seasonal product 'Mango Tango'-16 oz-₱110",
-    status: "Completed",
-  },
-  {
-    id: 18,
-    date: "June 14, 2025",
-    time: "11:45 AM",
-    user: "Staff",
-    action: "Updated",
-    details: "Modified recipe for 'Hazelnut Coffee'",
-    status: "Failed",
-  },
-  {
-    id: 19,
-    date: "June 14, 2025",
-    time: "2:15 PM",
-    user: "System",
-    action: "Automatic",
-    details: "Inventory restock alert triggered",
-    status: "Pending",
-  },
-  {
-    id: 20,
-    date: "June 14, 2025",
-    time: "3:50 PM",
-    user: "Manager",
-    action: "Deleted",
-    details: "Removed discontinued supplier 'SweetSyrups Inc.'",
-    status: "Completed",
-  },
+  // ... rest of log entries
 ];
 
 const Logs = () => {
+  // Search & filter states
   const [query, setQuery] = React.useState("");
   const [userFilter, setUserFilter] = React.useState("All Users");
   const [actionFilter, setActionFilter] = React.useState("All Actions");
   const [dateRange, setDateRange] = useState(null);
+
+  // Pagination states
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 15;
 
+  // Dropdown options
   const users = ["All Users", "Admin", "Manager", "Staff"];
   const actions = ["All Actions", "Created", "Deleted", "Updated", "Viewed"];
 
-  // Search Bar and Dropdown
+  // -------------------------------
+  // Filtering Logic
+  // -------------------------------
   const filteredProducts = data.filter((order) => {
+    // Match search query (case-insensitive)
     const matchesSearch = order.details
       .toLowerCase()
       .includes(query.toLowerCase());
+
+    // Match user filter
     const matchesUserFilter =
       userFilter === "All Users" || order.user === userFilter;
+
+    // Match action filter
     const matchesActionFilter =
       actionFilter === "All Actions" || order.action === actionFilter;
+
+    // Match date range (if selected)
     const orderDate = new Date(order.date + " " + order.time);
     const matchesDateFilter =
       !dateRange ||
       (orderDate >= new Date(dateRange.startDate) &&
         orderDate <=
           new Date(new Date(dateRange.endDate).setHours(23, 59, 59, 999)));
+
     return (
       matchesSearch &&
       matchesUserFilter &&
@@ -229,6 +73,9 @@ const Logs = () => {
     );
   });
 
+  // -------------------------------
+  // Pagination Logic
+  // -------------------------------
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
@@ -243,17 +90,27 @@ const Logs = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
+  // -------------------------------
+  // Helper functions for styling
+  // -------------------------------
+
+  // Status color badge
   const getStatusColor = (status) => {
     switch (status) {
       case "Success":
         return "bg-green-100 text-green-800";
       case "Failed":
         return "bg-red-100 text-red-800";
+      case "Pending":
+        return "bg-yellow-100 text-yellow-800";
+      case "Completed":
+        return "bg-blue-100 text-blue-800";
       default:
         return "bg-gray-100 text-gray-800";
     }
   };
 
+  // Action text color
   const getActionColor = (action) => {
     switch (action) {
       case "Created":
@@ -267,6 +124,7 @@ const Logs = () => {
     }
   };
 
+  // Action icon
   const getActionIcon = (action) => {
     switch (action) {
       case "Created":
@@ -282,12 +140,15 @@ const Logs = () => {
     }
   };
 
+  // -------------------------------
+  // UI Rendering
+  // -------------------------------
   return (
     <div className="p-6 h-screen flex flex-col">
       <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow">
         <strong className="text-lg">Activity Logs</strong>
 
-        {/* Top Controls */}
+        {/* Top Filters (Search, Dropdowns, Date Picker) */}
         <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
           <div className="flex items-center gap-2 flex-wrap">
             {/* Search Bar */}
@@ -299,13 +160,13 @@ const Logs = () => {
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
-                  setCurrentPage(1);
+                  setCurrentPage(1); // Reset to first page
                 }}
               />
               <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
 
-            {/* User Dropdown */}
+            {/* User Filter Dropdown */}
             <div className="relative w-[200px]">
               <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <select
@@ -324,7 +185,7 @@ const Logs = () => {
               </select>
             </div>
 
-            {/* Action Dropdown */}
+            {/* Action Filter Dropdown */}
             <div className="relative w-[200px]">
               <FaTasks className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <select
@@ -344,7 +205,7 @@ const Logs = () => {
             </div>
           </div>
 
-          {/* Date picker*/}
+          {/* Date Range Picker */}
           <DateRange
             onDateChange={(range) => {
               setDateRange(range);
@@ -353,7 +214,7 @@ const Logs = () => {
           />
         </div>
 
-        {/* Main Table */}
+        {/* Table Section */}
         <div className="mt-3 flex flex-col flex-grow">
           <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
             <div
@@ -364,6 +225,7 @@ const Logs = () => {
                 className="w-full text-sm rounded-lg table-fixed"
                 style={{ minWidth: "900px" }}
               >
+                {/* Table Header */}
                 <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
                   <tr>
                     <th className="p-2 text-left w-[150px] rounded-tl-lg">
@@ -375,11 +237,13 @@ const Logs = () => {
                     <th className="p-2 w-[120px] rounded-tr-lg">STATUS</th>
                   </tr>
                 </thead>
+
+                {/* Table Body */}
                 <tbody className="divide-y-3 divide-stone-100 text-center">
                   {paginatedProducts.length > 0 ? (
                     paginatedProducts.map((order) => (
                       <tr key={order.id} className="hover:bg-gray-50">
-                        {/* Time */}
+                        {/* Timestamp */}
                         <td className="p-2 text-left w-[150px]">
                           <div className="flex flex-col">
                             <span className="font-medium">{order.date}</span>
@@ -388,6 +252,7 @@ const Logs = () => {
                             </span>
                           </div>
                         </td>
+
                         {/* User */}
                         <td className="p-2 w-[130px]">
                           <div className="flex items-center justify-left gap-1">
@@ -395,6 +260,7 @@ const Logs = () => {
                             <span className="truncate">{order.user}</span>
                           </div>
                         </td>
+
                         {/* Action */}
                         <td
                           className={`p-2 w-[100px] font-medium ${getActionColor(
@@ -413,6 +279,7 @@ const Logs = () => {
                             {order.details}
                           </div>
                         </td>
+
                         {/* Status */}
                         <td className="p-2 w-[120px]">
                           <span
@@ -426,6 +293,7 @@ const Logs = () => {
                       </tr>
                     ))
                   ) : (
+                    // No results case
                     <tr>
                       <td colSpan="5" className="p-4 text-center text-gray-500">
                         No logs found matching your search
@@ -437,7 +305,7 @@ const Logs = () => {
             </div>
           </div>
 
-          {/* Pagination */}
+          {/* Pagination Controls */}
           <div className="mt-4">
             <div className="flex justify-end">
               <div className="flex items-center gap-4">

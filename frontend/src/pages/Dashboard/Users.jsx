@@ -8,6 +8,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import AddForm from "../../components/UserForms/AddForm";
 import EditForm from "../../components/UserForms/EditForm";
 
+// --- Dummy user data ---
 const data = [
   {
     id: 1,
@@ -100,26 +101,31 @@ const data = [
 ];
 
 const Users = () => {
-  const [query, setQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 15;
+  // --- State Management ---
+  const [query, setQuery] = useState(""); // search query (filters by first name)
+  const [currentPage, setCurrentPage] = useState(1); // pagination control
+  const itemsPerPage = 15; // items per page
+
+  // Modal visibility states
   const [showDelete, setShowDelete] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 
-  const filteredProducts = data.filter((item) =>
+  // --- Filtering logic (search by firstname) ---
+  const filteredUsers = data.filter((item) =>
     item.firstname.toLowerCase().includes(query.toLowerCase())
   );
 
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const paginatedProducts = filteredProducts.slice(
+  // --- Pagination logic ---
+  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+  const paginatedUsers = filteredUsers.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
   return (
     <div className="p-6 h-screen flex flex-col relative">
-      {/* Main Content */}
+      {/* --- Main Container --- */}
       <div
         className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
           showDelete || showAdd || showEdit ? "blur-sm pointer-events-none" : ""
@@ -127,32 +133,35 @@ const Users = () => {
       >
         <strong className="text-lg">User Management</strong>
 
-        {/* Top Controls */}
+        {/* --- Top Controls Section --- */}
         <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
           <div className="flex items-center gap-3">
+            {/* Add User Button */}
             <button
               className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md"
               onClick={() => setShowAdd(true)}
             >
               + Add User
             </button>
+
+            {/* Vertical Divider */}
             <div className="w-px h-8 bg-gray-300"></div>
+
+            {/* Export Buttons */}
             <div className="flex items-center gap-2">
               <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md">
-                <PiMicrosoftExcelLogoFill className="text-lg" />
-                Excel
+                <PiMicrosoftExcelLogoFill className="text-lg" /> Excel
               </button>
               <button className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
-                <FaFilePdf />
-                PDF
+                <FaFilePdf /> PDF
               </button>
               <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
-                <IoPrintSharp />
-                Print
+                <IoPrintSharp /> Print
               </button>
             </div>
           </div>
-          {/* Search BAR */}
+
+          {/* Search Bar */}
           <div className="flex-1 max-w-xs relative">
             <input
               className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
@@ -161,14 +170,14 @@ const Users = () => {
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);
-                setCurrentPage(1);
+                setCurrentPage(1); // reset to first page when searching
               }}
             />
             <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
           </div>
         </div>
 
-        {/* Table */}
+        {/* --- User Table --- */}
         <div className="mt-3 flex flex-col flex-grow">
           <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
             <div
@@ -179,6 +188,7 @@ const Users = () => {
                 className="w-full text-sm rounded-lg table-fixed"
                 style={{ minWidth: "900px" }}
               >
+                {/* Table Header */}
                 <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
                   <tr>
                     <th className="p-2 text-left w-[150px] rounded-tl-lg">
@@ -193,43 +203,39 @@ const Users = () => {
                     </th>
                   </tr>
                 </thead>
+
+                {/* Table Body */}
                 <tbody className="divide-y-3 divide-stone-100 text-center">
-                  {paginatedProducts.length > 0 ? (
-                    paginatedProducts.map((order) => (
-                      <tr key={order.id} className="hover:bg-gray-50">
-                        <td className="p-2 text-left w-[150px] font-semibold">
-                          {order.firstname}
+                  {paginatedUsers.length > 0 ? (
+                    paginatedUsers.map((user) => (
+                      <tr key={user.id} className="hover:bg-gray-50">
+                        <td className="p-2 text-left font-semibold">
+                          {user.firstname}
                         </td>
-                        <td className="p-2 text-left w-[150px]">
-                          {order.lastname}
-                        </td>
-                        <td className="p-2 text-left w-[150px]">
-                          {order.username}
-                        </td>
-                        <td className="p-2 text-left w-[200px]">
-                          {order.email}
-                        </td>
-                        <td className="p-2 w-[120px]">
-                          <div className="flex items-center justify-start gap-1">
+                        <td className="p-2 text-left">{user.lastname}</td>
+                        <td className="p-2 text-left">{user.username}</td>
+                        <td className="p-2 text-left">{user.email}</td>
+                        <td className="p-2">
+                          <div className="flex items-center gap-1">
                             <FaRegCircleUser className="w-[18px] h-[18px] text-gray-400" />
-                            <span className="truncate">{order.role}</span>
+                            <span className="truncate">{user.role}</span>
                           </div>
                         </td>
-                        <td className="p-2 w-[150px]">
+
+                        {/* Action Buttons (Edit / Delete) */}
+                        <td className="p-2">
                           <div className="flex items-center justify-center gap-3">
-                            <button className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs">
-                              <FiEdit
-                                className="text-sm"
-                                onClick={() => setShowAdd(true)}
-                              />
-                              Edit
+                            <button
+                              className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs"
+                              onClick={() => setShowEdit(true)} // ✅ FIX: open EditForm, not AddForm
+                            >
+                              <FiEdit className="text-sm" /> Edit
                             </button>
                             <button
                               className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
                               onClick={() => setShowDelete(true)}
                             >
-                              <RiDeleteBin5Line className="text-sm" />
-                              Delete
+                              <RiDeleteBin5Line className="text-sm" /> Delete
                             </button>
                           </div>
                         </td>
@@ -248,7 +254,7 @@ const Users = () => {
           </div>
         </div>
 
-        {/* Pagination */}
+        {/* --- Pagination Controls --- */}
         <div className="mt-4 flex justify-end">
           <div className="flex items-center gap-4">
             <button
@@ -274,17 +280,13 @@ const Users = () => {
         </div>
       </div>
 
-      {/* Delete Modal */}
+      {/* --- Modals --- */}
       {showDelete && (
         <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
       )}
-
-      {/* Add User Form */}
       {showAdd && (
         <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
       )}
-
-      {/* Edit Form */}
       {showEdit && (
         <EditForm isVisible={showEdit} onClose={() => setShowEdit(false)} />
       )}
