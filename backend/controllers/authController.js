@@ -16,13 +16,11 @@ exports.registerUser = async (req, res) => {
   }
 
   try {
-    // Check if email already exists
     const existingUser = await User.getUserByEmail(email);
     if (existingUser) {
       return res.status(400).json({ message: "Email already in use" });
     }
 
-    // Create the user
     const user = await User.createUser(fullName, email, password, profileImageUrl);
 
     res.status(201).json({
@@ -35,12 +33,48 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-//login user
+// Login user
 exports.loginUser = async (req, res) => {
-    
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    const user = await User.getUserByEmail(email);
+    if (!user) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    const isMatch = await User.comparePassword(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    res.status(200).json({
+      id: user.id,
+      fullName: user.fullname,
+      email: user.email,
+      profileImageUrl: user.profileImageUrl,
+      token: generateToken(user.id),
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Login failed", error: err.message });
+  }
 };
 
-//get user info user
+// Get user info
 exports.getUserInfo = async (req, res) => {
-    
+  try {
+    const user = await User.getUserById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { password, ...userData } = user; // Remove password field manually
+    res.status(200).json(userData);
+  } catch (err) {
+    res.status(500).json({ message: "Error retrieving user", error: err.message });
+  }
 };
