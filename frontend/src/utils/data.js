@@ -10,7 +10,8 @@ import {
     LuUser,
     LuActivity,
     LuSettings,
-    LuLogOut
+    LuLogOut,
+    LuMonitorCog
 
 } from "react-icons/lu";
 
@@ -45,44 +46,50 @@ export const SIDE_MENU_DATA = [
         label: "Stock In",
         path: "/dashboard/stocks",
     },
-    {
+        {
         id: "06",
+        icon: LuMonitorCog,
+        label: "Item Tracker",
+        path: "/dashboard/tracker",
+    },
+    {
+        id: "07",
         icon: LuMilkOff,
         label: "Spoiled & Damaged",
         path: "/dashboard/spoilage",
     },
     {
-        id: "07",
+        id: "08",
         icon: LuArrowLeftRight,
         label: "Transactions",
         path: "/dashboard/transactions",
     },
     {
-        id: "08",
+        id: "09",
         icon: LuReceipt,
         label: "Sales",
         path: "/dashboard/sales",
     },
     {
-        id: "09",
+        id: "10",
         icon: LuUser,
         label: "Users",
         path: "/dashboard/users",
     },
     {
-        id: "10",
+        id: "11",
         icon: LuActivity,
         label: "Activity Logs",
         path: "/dashboard/logs",
     },
     {
-        id: "11",
+        id: "12",
         icon: LuSettings,
         label: "Settings",
         path: "/dashboard/settings",
     },
     {
-        id: "12",
+        id: "13",
         icon: LuLogOut,
         label: "Logout",
         path: "logout",

@@ -10,6 +10,7 @@ import {
   FaTasks,
 } from "react-icons/fa";
 import DateRange from "../../components/DateRange"; // Custom date picker component
+import DashboardLayout from "../../components/layouts/DashboardLayout";
 
 // Sample activity log data
 const data = [
@@ -144,6 +145,7 @@ const Logs = () => {
   // UI Rendering
   // -------------------------------
   return (
+    <DashboardLayout activeMenu="Activity Logs">
     <div className="p-6 h-screen flex flex-col">
       <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow">
         <strong className="text-lg">Activity Logs</strong>
@@ -332,6 +334,7 @@ const Logs = () => {
         </div>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

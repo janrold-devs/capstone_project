@@ -9,6 +9,7 @@ import SalesReport from "../../components/Reports/SalesReport";
 import SalesActivity from "../../components/Reports/SalesActivity";
 import SpoilageReport from "../../components/Reports/SpoilageReport";
 import StocksReport from "../../components/Reports/StocksReport";
+import DashboardLayout from "../../components/layouts/DashboardLayout";
 
 const Reports = () => {
   // State to manage delete modal visibility
@@ -51,6 +52,7 @@ const Reports = () => {
   };
 
   return (
+    <DashboardLayout activeMenu="Sales">
     <div className="p-6 h-screen flex flex-col relative">
       {/* Main container with blur effect when delete modal is open */}
       <div
@@ -116,6 +118,7 @@ const Reports = () => {
         <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
       )}
     </div>
+    </DashboardLayout>
   );
 };
 

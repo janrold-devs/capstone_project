@@ -5,6 +5,7 @@ import { FaFilePdf } from "react-icons/fa6";
 import { IoPrintSharp, IoSearch } from "react-icons/io5";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import AddForm from "../../components/SpoilageForms/AddForm";
+import DashboardLayout from "../../components/layouts/DashboardLayout";
 
 // Sample static dataset for spoiled/damaged items
 const data = [
@@ -167,11 +168,12 @@ const Spoilage = () => {
   );
 
   return (
-    <div className="p-6 h-screen flex flex-col relative">
-      {/* ---------------- Main Content ---------------- */}
-      <div
-        className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
-          showDelete || showAdd ? "blur-sm pointer-events-none" : ""
+    <DashboardLayout activeMenu="Spoilage">
+      <div className="p-6 h-screen flex flex-col relative">
+        {/* ---------------- Main Content ---------------- */}
+        <div
+          className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
+            showDelete || showAdd ? "blur-sm pointer-events-none" : ""
         }`}
       >
         <strong className="text-lg">Spoiled and Damaged List</strong>
@@ -335,6 +337,7 @@ const Spoilage = () => {
         <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
       )}
     </div>
+    </DashboardLayout>
   );
 };
 

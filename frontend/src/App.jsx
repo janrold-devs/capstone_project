@@ -37,7 +37,7 @@ const App = () => {
             element={<TransactionHistoryReport />}
           />
           <Route path="/dashboard/products" element={<Products />} />
-          <Route path="/dashboard/reports" element={<Reports />} />
+          <Route path="/dashboard/sales" element={<Reports />} />
           <Route path="/dashboard/spoilage" element={<Spoilage />} />
           <Route path="/dashboard/stocks" element={<Stocks />} />
           <Route path="/dashboard/users" element={<Users />} />

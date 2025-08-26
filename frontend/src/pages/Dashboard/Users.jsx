@@ -7,6 +7,7 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import AddForm from "../../components/UserForms/AddForm";
 import EditForm from "../../components/UserForms/EditForm";
+import DashboardLayout from "../../components/layouts/DashboardLayout";
 
 // --- Dummy user data ---
 const data = [
@@ -124,6 +125,7 @@ const Users = () => {
   );
 
   return (
+    <DashboardLayout activeMenu="Users">
     <div className="p-6 h-screen flex flex-col relative">
       {/* --- Main Container --- */}
       <div
@@ -291,6 +293,7 @@ const Users = () => {
         <EditForm isVisible={showEdit} onClose={() => setShowEdit(false)} />
       )}
     </div>
+    </DashboardLayout>
   );
 };
 

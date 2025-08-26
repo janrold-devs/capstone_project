@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { SiBuymeacoffee } from "react-icons/si";
 import { FiSettings, FiPrinter, FiArrowLeft } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import DashboardLayout from "../../components/layouts/DashboardLayout";
 
 // ---------------- Menu Items ----------------
 // Each menu item has: name, image, category
@@ -202,6 +203,7 @@ function Pos() {
 
   // ---------------- UI ----------------
   return (
+    <DashboardLayout activeMenu="POS">
     <div className="h-screen bg-gray-50 flex flex-col md:flex-row">
       {/* ---------------- Menu Area ---------------- */}
       <div className="flex-1 flex flex-col p-4 md:p-6">
@@ -622,6 +624,7 @@ function Pos() {
         </div>
       )}
     </div>
+    </DashboardLayout>
   );
 }
 

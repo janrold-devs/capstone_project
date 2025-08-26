@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Only if using React Router
+import DashboardLayout from "../../components/layouts/DashboardLayout";
 
 const mockTransactionData = [
   {
@@ -314,10 +315,11 @@ function TransactionHistoryReport() {
   const formatCurrency = (amount) => `₱${amount.toFixed(2)}`;
 
   return (
-    <div className="p-6 h-screen flex flex-col relative">
-      <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300">
-        {/* ---------------- Title ---------------- */}
-        <strong className="text-lg mb-3">Transaction History</strong>
+    <DashboardLayout activeMenu="Transactions">
+      <div className="p-6 h-screen flex flex-col relative">
+        <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300">
+          {/* ---------------- Title ---------------- */}
+          <strong className="text-lg mb-3">Transaction History</strong>
 
         {/* ---------------- Controls Section ---------------- */}
         <div className="flex items-center gap-3 mb-4">
@@ -475,6 +477,7 @@ function TransactionHistoryReport() {
         </div>
       </div>
     </div>
+    </DashboardLayout>
   );
 }
 

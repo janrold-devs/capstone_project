@@ -7,6 +7,7 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import AddForm from "../../components/ProductForms/AddForm"; // Add new product form
 import EditForm from "../../components/ProductForms/EditForm"; // Edit existing product form
+import DashboardLayout from "../../components/layouts/DashboardLayout";
 
 // --- Sample Product Data (mock data for now) ---
 const data = [
@@ -256,230 +257,236 @@ const Products = () => {
   };
 
   return (
-    <>
-      {/* Main Content Wrapper */}
-      <div
-        className={`p-6 min-h-screen flex flex-col transition-all duration-300 ${
-          showDelete || showAdd || showEdit ? "blur-sm" : "" // Blur background when modal is active
-        }`}
-      >
-        <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow">
-          <strong className="text-lg">Product List</strong>
+    <DashboardLayout activeMenu="Products">
+      <>
+        {/* Main Content Wrapper */}
+        <div
+          className={`p-6 min-h-screen flex flex-col transition-all duration-300 ${
+            showDelete || showAdd || showEdit ? "blur-sm" : "" // Blur background when modal is active
+          }`}
+        >
+          <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow">
+            <strong className="text-lg">Product List</strong>
 
-          {/* --- Top Controls (Add, Export, Search) --- */}
-          <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
-            {/* Left Controls: Add + Export Buttons */}
-            <div className="flex items-center gap-3">
-              {/* Add Product Button */}
-              <button
-                className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md"
-                onClick={() => setShowAdd(true)}
-              >
-                + Add Product
-              </button>
+            {/* --- Top Controls (Add, Export, Search) --- */}
+            <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
+              {/* Left Controls: Add + Export Buttons */}
+              <div className="flex items-center gap-3">
+                {/* Add Product Button */}
+                <button
+                  className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md"
+                  onClick={() => setShowAdd(true)}
+                >
+                  + Add Product
+                </button>
 
-              {/* Divider */}
-              <div className="w-px h-8 bg-gray-300"></div>
+                {/* Divider */}
+                <div className="w-px h-8 bg-gray-300"></div>
 
-              {/* Export Buttons */}
-              <div className="flex items-center gap-2">
-                <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md">
-                  <PiMicrosoftExcelLogoFill className="text-lg" />
-                  Excel
-                </button>
-                <button className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
-                  <FaFilePdf />
-                  PDF
-                </button>
-                <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
-                  <IoPrintSharp />
-                  Print
-                </button>
+                {/* Export Buttons */}
+                <div className="flex items-center gap-2">
+                  <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md">
+                    <PiMicrosoftExcelLogoFill className="text-lg" />
+                    Excel
+                  </button>
+                  <button className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
+                    <FaFilePdf />
+                    PDF
+                  </button>
+                  <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
+                    <IoPrintSharp />
+                    Print
+                  </button>
+                </div>
+              </div>
+
+              {/* Search Bar */}
+              <div className="flex-1 max-w-xs relative">
+                <input
+                  className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
+                  type="text"
+                  placeholder="Search by Name"
+                  value={query}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                    setCurrentPage(1); // Reset to page 1 when searching
+                  }}
+                />
+                <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
               </div>
             </div>
 
-            {/* Search Bar */}
-            <div className="flex-1 max-w-xs relative">
-              <input
-                className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
-                type="text"
-                placeholder="Search by Name"
-                value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value);
-                  setCurrentPage(1); // Reset to page 1 when searching
-                }}
-              />
-              <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-            </div>
-          </div>
-
-          {/* --- Table Section --- */}
-          <div className="mt-3 flex flex-col flex-grow">
-            <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
-              <div
-                className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
-                style={{ scrollbarGutter: "stable" }}
-              >
-                <table
-                  className="w-full text-sm rounded-lg table-fixed"
-                  style={{ minWidth: "900px" }}
+            {/* --- Table Section --- */}
+            <div className="mt-3 flex flex-col flex-grow">
+              <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
+                <div
+                  className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
+                  style={{ scrollbarGutter: "stable" }}
                 >
-                  {/* Table Header */}
-                  <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
-                    <tr>
-                      <th className="p-1 text-left w-[280px]">Product Name</th>
-                      <th className="p-1 w-[90px]">Size</th>
-                      <th className="p-1 w-[90px]">Price</th>
-                      <th className="p-1 w-[320px]">Ingredients</th>
-                      <th className="p-1 w-[140px]">Category</th>
-                      <th className="p-1 w-[110px]">Status</th>
-                      <th className="p-1 w-[170px]">Actions</th>
-                    </tr>
-                  </thead>
+                  <table
+                    className="w-full text-sm rounded-lg table-fixed"
+                    style={{ minWidth: "900px" }}
+                  >
+                    {/* Table Header */}
+                    <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
+                      <tr>
+                        <th className="p-1 text-left w-[280px]">
+                          Product Name
+                        </th>
+                        <th className="p-1 w-[90px]">Size</th>
+                        <th className="p-1 w-[90px]">Price</th>
+                        <th className="p-1 w-[320px]">Ingredients</th>
+                        <th className="p-1 w-[140px]">Category</th>
+                        <th className="p-1 w-[110px]">Status</th>
+                        <th className="p-1 w-[170px]">Actions</th>
+                      </tr>
+                    </thead>
 
-                  {/* Table Body */}
-                  <tbody className="divide-y-3 divide-stone-100 text-center">
-                    {paginatedProducts.length > 0 ? (
-                      paginatedProducts.map((order) => (
-                        <tr key={order.id}>
-                          {/* Product Name + Image */}
-                          <td className="p-1 text-left flex items-center gap-2 w-[280px]">
-                            {order.image ? (
-                              <img
-                                src={order.image}
-                                alt={order.productName}
-                                className="w-10 h-10 object-cover rounded"
-                              />
-                            ) : (
-                              <div className="w-10 h-10 bg-gray-200 rounded flex items-center justify-center text-gray-500 text-xs">
-                                N/A
-                              </div>
-                            )}
-                            <span className="font-medium">
-                              {order.productName}
-                            </span>
-                          </td>
+                    {/* Table Body */}
+                    <tbody className="divide-y-3 divide-stone-100 text-center">
+                      {paginatedProducts.length > 0 ? (
+                        paginatedProducts.map((order) => (
+                          <tr key={order.id}>
+                            {/* Product Name + Image */}
+                            <td className="p-1 text-left flex items-center gap-2 w-[280px]">
+                              {order.image ? (
+                                <img
+                                  src={order.image}
+                                  alt={order.productName}
+                                  className="w-10 h-10 object-cover rounded"
+                                />
+                              ) : (
+                                <div className="w-10 h-10 bg-gray-200 rounded flex items-center justify-center text-gray-500 text-xs">
+                                  N/A
+                                </div>
+                              )}
+                              <span className="font-medium">
+                                {order.productName}
+                              </span>
+                            </td>
 
-                          {/* Size */}
-                          <td className="p-1 w-[90px]">{order.Size}</td>
+                            {/* Size */}
+                            <td className="p-1 w-[90px]">{order.Size}</td>
 
-                          {/* Price */}
-                          <td className="p-1 w-[90px]">₱{order.price}</td>
+                            {/* Price */}
+                            <td className="p-1 w-[90px]">₱{order.price}</td>
 
-                          {/* Ingredients (badges) */}
-                          <td className="p-1 w-[320px]">
-                            {Array.isArray(order.ingredients) ? (
-                              <div className="flex flex-wrap gap-1 justify-center">
-                                {order.ingredients.map((ingredient, index) => (
-                                  <span
-                                    key={index}
-                                    className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs shadow-sm"
-                                  >
-                                    {ingredient}
-                                  </span>
-                                ))}
-                              </div>
-                            ) : (
-                              order.ingredients
-                            )}
-                          </td>
+                            {/* Ingredients (badges) */}
+                            <td className="p-1 w-[320px]">
+                              {Array.isArray(order.ingredients) ? (
+                                <div className="flex flex-wrap gap-1 justify-center">
+                                  {order.ingredients.map(
+                                    (ingredient, index) => (
+                                      <span
+                                        key={index}
+                                        className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs shadow-sm"
+                                      >
+                                        {ingredient}
+                                      </span>
+                                    )
+                                  )}
+                                </div>
+                              ) : (
+                                order.ingredients
+                              )}
+                            </td>
 
-                          {/* Category */}
-                          <td className="p-1 w-[140px]">{order.category}</td>
+                            {/* Category */}
+                            <td className="p-1 w-[140px]">{order.category}</td>
 
-                          {/* Status Badge */}
-                          <td className="p-1 w-[110px]">
-                            <span
-                              className={`px-1 py-1 rounded text-xs shadow-sm font-medium ${getStatusColor(
-                                order.status
-                              )}`}
-                            >
-                              {order.status}
-                            </span>
-                          </td>
-
-                          {/* Action Buttons */}
-                          <td className="p-1 w-[170px]">
-                            <div className="flex items-center justify-center gap-3">
-                              {/* Edit Button */}
-                              <button
-                                className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs"
-                                onClick={() => setShowEdit(true)}
+                            {/* Status Badge */}
+                            <td className="p-1 w-[110px]">
+                              <span
+                                className={`px-1 py-1 rounded text-xs shadow-sm font-medium ${getStatusColor(
+                                  order.status
+                                )}`}
                               >
-                                <FiEdit className="text-sm" />
-                                Edit
-                              </button>
-                              {/* Delete Button */}
-                              <button
-                                className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
-                                onClick={() => setShowDelete(true)}
-                              >
-                                <RiDeleteBin5Line className="text-sm" />
-                                Delete
-                              </button>
-                            </div>
+                                {order.status}
+                              </span>
+                            </td>
+
+                            {/* Action Buttons */}
+                            <td className="p-1 w-[170px]">
+                              <div className="flex items-center justify-center gap-3">
+                                {/* Edit Button */}
+                                <button
+                                  className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs"
+                                  onClick={() => setShowEdit(true)}
+                                >
+                                  <FiEdit className="text-sm" />
+                                  Edit
+                                </button>
+                                {/* Delete Button */}
+                                <button
+                                  className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
+                                  onClick={() => setShowDelete(true)}
+                                >
+                                  <RiDeleteBin5Line className="text-sm" />
+                                  Delete
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        // Fallback if no product matches search
+                        <tr>
+                          <td
+                            colSpan="7"
+                            className="p-4 text-center text-gray-500"
+                          >
+                            No products found matching your search
                           </td>
                         </tr>
-                      ))
-                    ) : (
-                      // Fallback if no product matches search
-                      <tr>
-                        <td
-                          colSpan="7"
-                          className="p-4 text-center text-gray-500"
-                        >
-                          No products found matching your search
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
 
-            {/* --- Pagination --- */}
-            <div className="mt-auto pt-4">
-              <div className="flex justify-end">
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={handlePrevious}
-                    disabled={currentPage === 1}
-                    className="px-3 py-1 hover:underline disabled:opacity-50"
-                  >
-                    Previous
-                  </button>
-                  <span className="text-sm">
-                    Page {currentPage} of {totalPages}
-                  </span>
-                  <button
-                    onClick={handleNext}
-                    disabled={currentPage === totalPages}
-                    className="px-3 py-1 hover:underline disabled:opacity-50"
-                  >
-                    Next
-                  </button>
+              {/* --- Pagination --- */}
+              <div className="mt-auto pt-4">
+                <div className="flex justify-end">
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={handlePrevious}
+                      disabled={currentPage === 1}
+                      className="px-3 py-1 hover:underline disabled:opacity-50"
+                    >
+                      Previous
+                    </button>
+                    <span className="text-sm">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                      onClick={handleNext}
+                      disabled={currentPage === totalPages}
+                      className="px-3 py-1 hover:underline disabled:opacity-50"
+                    >
+                      Next
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* --- Modals --- */}
-      {/* Delete Confirmation */}
-      <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
+        {/* --- Modals --- */}
+        {/* Delete Confirmation */}
+        <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
 
-      {/* Add Product Form */}
-      {showAdd && (
-        <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
-      )}
+        {/* Add Product Form */}
+        {showAdd && (
+          <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
+        )}
 
-      {/* Edit Product Form */}
-      {showEdit && (
-        <EditForm isVisible={showEdit} onClose={() => setShowEdit(false)} />
-      )}
-    </>
+        {/* Edit Product Form */}
+        {showEdit && (
+          <EditForm isVisible={showEdit} onClose={() => setShowEdit(false)} />
+        )}
+      </>
+    </DashboardLayout>
   );
 };
 

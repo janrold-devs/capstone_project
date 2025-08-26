@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import DashboardLayout from "../../components/layouts/DashboardLayout";
 
 const RequestForm = () => {
   // State to hold form input values
@@ -47,6 +48,7 @@ const RequestForm = () => {
   };
 
   return (
+    <DashboardLayout activeMenu="Item Tracker">
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-lg rounded-lg w-full max-w-lg p-6">
         {/* Form Header */}
@@ -167,6 +169,7 @@ const RequestForm = () => {
         </form>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

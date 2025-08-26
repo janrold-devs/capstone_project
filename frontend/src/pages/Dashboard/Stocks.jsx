@@ -3,6 +3,7 @@ import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 import { FaFilePdf } from "react-icons/fa6";
 import { IoPrintSharp, IoSearch } from "react-icons/io5";
 import AddForm from "../../components/StockForm/AddForm";
+import DashboardLayout from "../../components/layouts/DashboardLayout";
 
 // Static dataset (mock data) for stock records
 const data = [
@@ -149,11 +150,12 @@ const Stocks = () => {
   );
 
   return (
-    <div className="p-6 h-screen flex flex-col relative">
-      {/* Main Content Area */}
-      <div
-        className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
-          showAdd ? "blur-sm pointer-events-none" : ""
+    <DashboardLayout activeMenu="Stocks">
+      <div className="p-6 h-screen flex flex-col relative">
+        {/* Main Content Area */}
+        <div
+          className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
+            showAdd ? "blur-sm pointer-events-none" : ""
         }`}
       >
         <strong className="text-lg">Stock List</strong>
@@ -297,6 +299,7 @@ const Stocks = () => {
         <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
       )}
     </div>
+    </DashboardLayout>
   );
 };
 

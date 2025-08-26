@@ -7,6 +7,7 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import AddForm from "../../components/IngForm/AddForm";
 import EditForm from "../../components/IngForm/EditForm";
+import DashboardLayout from "../../components/layouts/DashboardLayout";
 
 // -------------------- Sample Ingredient/Material Data --------------------
 const data = [
@@ -238,11 +239,12 @@ const Ingredients = () => {
   };
 
   return (
-    <div className="p-6 h-screen flex flex-col relative">
-      {/* -------------------- Main Table Content -------------------- */}
-      <div
-        className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
-          showDelete || showAdd || showEdit ? "blur-sm pointer-events-none" : ""
+    <DashboardLayout activeMenu="Ingredients & Materials">
+      <div className="p-6 h-screen flex flex-col relative">
+        {/* -------------------- Main Table Content -------------------- */}
+        <div
+          className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
+            showDelete || showAdd || showEdit ? "blur-sm pointer-events-none" : ""
         }`}
       >
         <strong className="text-lg">Ingredients and Material List</strong>
@@ -424,6 +426,7 @@ const Ingredients = () => {
         <EditForm isVisible={showEdit} onClose={() => setShowEdit(false)} />
       )}
     </div>
+    </DashboardLayout>
   );
 };
 
