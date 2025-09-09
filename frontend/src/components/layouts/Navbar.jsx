@@ -3,7 +3,7 @@ import { HiOutlineBell, HiOutlineCog } from "react-icons/hi";
 
 const Navbar = () => {
   return (
-    <header className="w-full h-20 bg-primary text-white flex justify-end items-center px-6 shadow-md border-b border-black/10 sticky top-0 z-40">
+    <header className="w-full h-14 bg-primary text-white flex justify-end items-center px-6 shadow-md border-b border-black/10 sticky top-0 z-40">
       {/* Right Icons */}
       <nav className="flex items-center space-x-6">
         {/* Bell */}
@@ -14,7 +14,7 @@ const Navbar = () => {
         {/* Profile Avatar Placeholder */}
         <a
           href="/profile"
-          className="bg-gray-600 hover:ring-2 hover:ring-gray-400 transition-all rounded-full w-10 h-10 flex items-center justify-center"
+          className="bg-gray-600 hover:ring-2 hover:ring-gray-400 transition-all rounded-full w-9 h-9 flex items-center justify-center"
           title="Profile"
         >
           <img

@@ -244,188 +244,197 @@ const Ingredients = () => {
         {/* -------------------- Main Table Content -------------------- */}
         <div
           className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
-            showDelete || showAdd || showEdit ? "blur-sm pointer-events-none" : ""
-        }`}
-      >
-        <strong className="text-lg">Ingredients and Material List</strong>
+            showDelete || showAdd || showEdit
+              ? "blur-sm pointer-events-none"
+              : ""
+          }`}
+        >
+          <strong className="text-lg">Ingredients and Material List</strong>
 
-        {/* -------------------- Top Controls -------------------- */}
-        <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
-          {/* Left-side: Add button + Export buttons */}
-          <div className="flex items-center gap-3">
-            <button
-              className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md"
-              onClick={() => setShowAdd(true)}
-            >
-              + Add Ingredient and Material
-            </button>
+          {/* -------------------- Top Controls -------------------- */}
+          <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
+            {/* Left-side: Add button + Export buttons */}
+            <div className="flex items-center gap-3">
+              <button
+                className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md"
+                onClick={() => setShowAdd(true)}
+              >
+                + Add Ingredient and Material
+              </button>
 
-            {/* Divider line */}
-            <div className="w-px h-8 bg-gray-300"></div>
+              {/* Divider line */}
+              <div className="w-px h-8 bg-gray-300"></div>
 
-            {/* Export buttons */}
-            <div className="flex items-center gap-2">
-              <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md">
-                <PiMicrosoftExcelLogoFill className="text-lg" />
-                Excel
-              </button>
-              <button className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
-                <FaFilePdf />
-                PDF
-              </button>
-              <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
-                <IoPrintSharp />
-                Print
-              </button>
+              {/* Export buttons */}
+              <div className="flex items-center gap-2">
+                <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md">
+                  <PiMicrosoftExcelLogoFill className="text-lg" />
+                  Excel
+                </button>
+                <button className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
+                  <FaFilePdf />
+                  PDF
+                </button>
+                <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
+                  <IoPrintSharp />
+                  Print
+                </button>
+              </div>
+            </div>
+
+            {/* Right-side: Search Bar */}
+            <div className="flex-1 max-w-xs relative">
+              <input
+                className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
+                type="text"
+                placeholder="Search by Name"
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setCurrentPage(1); // reset to first page on search
+                }}
+              />
+              <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
           </div>
 
-          {/* Right-side: Search Bar */}
-          <div className="flex-1 max-w-xs relative">
-            <input
-              className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
-              type="text"
-              placeholder="Search by Name"
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value);
-                setCurrentPage(1); // reset to first page on search
-              }}
-            />
-            <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-          </div>
-        </div>
-
-        {/* -------------------- Table -------------------- */}
-        <div className="mt-3 flex flex-col flex-grow">
-          <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
-            <div
-              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
-              style={{ scrollbarGutter: "stable" }}
-            >
-              <table
-                className="w-full text-sm rounded-lg table-fixed"
-                style={{ minWidth: "900px" }}
+          {/* -------------------- Table -------------------- */}
+          <div className="mt-3 flex flex-col flex-grow">
+            <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
+              <div
+                className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
+                style={{ scrollbarGutter: "stable" }}
               >
-                {/* Table Head */}
-                <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
-                  <tr>
-                    <th className="p-2 text-left w-[150px] rounded-tl-lg">
-                      NAME
-                    </th>
-                    <th className="p-2 text-center w-[80px]">QUANTITY</th>
-                    <th className="p-2 text-center w-[80px]">UNIT</th>
-                    <th className="p-2 text-center w-[120px]">STOCK STATUS</th>
-                    <th className="p-2 text-center w-[120px]">EXPIRATION</th>
-                    <th className="p-2 text-left w-[150px]">REMARKS</th>
-                    <th className="p-2 text-center w-[150px] rounded-tr-lg">
-                      ACTION
-                    </th>
-                  </tr>
-                </thead>
+                <table
+                  className="w-full text-sm rounded-lg table-fixed"
+                  style={{ minWidth: "900px" }}
+                >
+                  {/* Table Head */}
+                  <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
+                    <tr>
+                      <th className="p-2 text-left w-[150px] rounded-tl-lg">
+                        NAME
+                      </th>
+                      <th className="p-2 text-center w-[80px]">QUANTITY</th>
+                      <th className="p-2 text-center w-[80px]">UNIT</th>
+                      <th className="p-2 text-center w-[120px]">
+                        STOCK STATUS
+                      </th>
+                      <th className="p-2 text-center w-[120px]">EXPIRATION</th>
+                      <th className="p-2 text-left w-[150px]">REMARKS</th>
+                      <th className="p-2 text-center w-[150px] rounded-tr-lg">
+                        ACTION
+                      </th>
+                    </tr>
+                  </thead>
 
-                {/* Table Body */}
-                <tbody className="divide-y-3 divide-stone-100 text-center">
-                  {paginatedProducts.length > 0 ? (
-                    paginatedProducts.map((order) => (
-                      <tr key={order.id} className="hover:bg-gray-50">
-                        <td className="p-2 text-left w-[150px] font-semibold">
-                          {order.name}
-                        </td>
-                        <td className="p-2 w-[80px]">{order.quantity}</td>
-                        <td className="p-2 w-[80px]">{order.unit}</td>
-                        <td className="p-2 w-[120px]">
-                          <span
-                            className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(
-                              order.alert
+                  {/* Table Body */}
+                  <tbody className="divide-y-3 divide-stone-100 text-center">
+                    {paginatedProducts.length > 0 ? (
+                      paginatedProducts.map((order) => (
+                        <tr key={order.id} className="hover:bg-gray-50">
+                          <td className="p-2 text-left w-[150px] font-semibold">
+                            {order.name}
+                          </td>
+                          <td className="p-2 w-[80px]">{order.quantity}</td>
+                          <td className="p-2 w-[80px]">{order.unit}</td>
+                          <td className="p-2 w-[120px]">
+                            <span
+                              className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(
+                                order.alert
+                              )}`}
+                            >
+                              {order.alert}
+                            </span>
+                          </td>
+                          <td
+                            className={`p-2 w-[120px] ${getExpirationColor(
+                              order.expiration
                             )}`}
                           >
-                            {order.alert}
-                          </span>
-                        </td>
+                            {order.expiration}
+                          </td>
+                          <td className="p-2 text-left w-[150px]">
+                            {order.remarks}
+                          </td>
+                          <td className="p-2 w-[150px]">
+                            <div className="flex items-center justify-center gap-3">
+                              {/* Edit Button */}
+                              <button
+                                className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs"
+                                onClick={() => setShowEdit(true)}
+                              >
+                                <FiEdit className="text-sm" />
+                                Edit
+                              </button>
+                              {/* Delete Button */}
+                              <button
+                                className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
+                                onClick={() => setShowDelete(true)}
+                              >
+                                <RiDeleteBin5Line className="text-sm" />
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      // Empty state if no matches found
+                      <tr>
                         <td
-                          className={`p-2 w-[120px] ${getExpirationColor(
-                            order.expiration
-                          )}`}
+                          colSpan="7"
+                          className="p-4 text-center text-gray-500"
                         >
-                          {order.expiration}
-                        </td>
-                        <td className="p-2 text-left w-[150px]">
-                          {order.remarks}
-                        </td>
-                        <td className="p-2 w-[150px]">
-                          <div className="flex items-center justify-center gap-3">
-                            {/* Edit Button */}
-                            <button
-                              className="flex items-center gap-[3px] text-blue-600 hover:underline text-xs"
-                              onClick={() => setShowEdit(true)}
-                            >
-                              <FiEdit className="text-sm" />
-                              Edit
-                            </button>
-                            {/* Delete Button */}
-                            <button
-                              className="flex items-center gap-[3px] text-red-600 hover:underline text-xs"
-                              onClick={() => setShowDelete(true)}
-                            >
-                              <RiDeleteBin5Line className="text-sm" />
-                              Delete
-                            </button>
-                          </div>
+                          No ingredient or materials found matching your search
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    // Empty state if no matches found
-                    <tr>
-                      <td colSpan="7" className="p-4 text-center text-gray-500">
-                        No ingredient or materials found matching your search
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* -------------------- Pagination -------------------- */}
+          <div className="mt-4 flex justify-end">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() =>
+                  currentPage > 1 && setCurrentPage(currentPage - 1)
+                }
+                disabled={currentPage === 1}
+                className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+              <span className="text-sm">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() =>
+                  currentPage < totalPages && setCurrentPage(currentPage + 1)
+                }
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
 
-        {/* -------------------- Pagination -------------------- */}
-        <div className="mt-4 flex justify-end">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Previous
-            </button>
-            <span className="text-sm">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() =>
-                currentPage < totalPages && setCurrentPage(currentPage + 1)
-              }
-              disabled={currentPage === totalPages}
-              className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Next
-            </button>
-          </div>
-        </div>
+        {/* -------------------- Modals -------------------- */}
+        {showDelete && (
+          <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
+        )}
+        {showAdd && (
+          <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
+        )}
+        {showEdit && (
+          <EditForm isVisible={showEdit} onClose={() => setShowEdit(false)} />
+        )}
       </div>
-
-      {/* -------------------- Modals -------------------- */}
-      {showDelete && (
-        <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
-      )}
-      {showAdd && (
-        <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
-      )}
-      {showEdit && (
-        <EditForm isVisible={showEdit} onClose={() => setShowEdit(false)} />
-      )}
-    </div>
     </DashboardLayout>
   );
 };

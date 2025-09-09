@@ -261,7 +261,7 @@ const Products = () => {
       <>
         {/* Main Content Wrapper */}
         <div
-          className={`p-6 min-h-screen flex flex-col transition-all duration-300 ${
+          className={` min-h-screen flex flex-col transition-all duration-300 ${
             showDelete || showAdd || showEdit ? "blur-sm" : "" // Blur background when modal is active
           }`}
         >
@@ -323,10 +323,7 @@ const Products = () => {
                   className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
                   style={{ scrollbarGutter: "stable" }}
                 >
-                  <table
-                    className="w-full text-sm rounded-lg table-fixed"
-                    style={{ minWidth: "900px" }}
-                  >
+                  <table className="w-full text-sm rounded-lg table-auto">
                     {/* Table Header */}
                     <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
                       <tr>
