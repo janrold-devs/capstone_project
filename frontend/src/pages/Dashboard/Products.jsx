@@ -261,7 +261,7 @@ const Products = () => {
       <>
         {/* Main Content Wrapper */}
         <div
-          className={` min-h-screen flex flex-col transition-all duration-300 ${
+          className={`min-h-screen flex flex-col transition-all duration-300 ${
             showDelete || showAdd || showEdit ? "blur-sm" : "" // Blur background when modal is active
           }`}
         >

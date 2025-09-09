@@ -37,7 +37,7 @@ function Home() {
       id: 4,
       icon: <RiFileDamageFill className="text-red-600 w-6 h-6" />,
       value: "1206",
-      label: "Spoiled and Damaged Ingredients",
+      label: "Spoiled & Damaged Ingredients",
       change: "+34,938 this month",
       trend: "down",
     },
@@ -53,7 +53,7 @@ function Home() {
             {cardData.map((card) => (
               <div
                 key={card.id}
-                className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-md transition-shadow"
+                className="bg-white rounded-xl p-4 h-35 shadow-lg border border-gray-100 hover:shadow-md transition-shadow"
               >
                 {/* Card header: icon + monthly change trend */}
                 <div className="flex justify-between items-start mb-4">
@@ -73,20 +73,7 @@ function Home() {
                   <h3 className="text-2xl font-bold text-gray-800">
                     {card.value}
                   </h3>
-                  <p className="text-gray-500 text-sm mt-1">{card.label}</p>
-                </div>
-
-                {/* Progress bar (visual indicator of growth/decline) */}
-                <div className="mt-4">
-                  <div className="w-full bg-gray-200 rounded-full h-1.5">
-                    <div
-                      className={`h-1.5 rounded-full ${
-                        card.trend === "up" ? "bg-green-500" : "bg-red-500"
-                      }`}
-                      // Different widths to visualize performance
-                      style={{ width: card.trend === "up" ? "75%" : "60%" }}
-                    ></div>
-                  </div>
+                  <p className="text-gray-500 text-[14px]">{card.label}</p>
                 </div>
               </div>
             ))}
@@ -95,7 +82,7 @@ function Home() {
           {/* ---------------------- Bottom Section ---------------------- */}
           <div className="flex-1 flex space-x-6 overflow-hidden">
             {/* --------- Chart Section --------- */}
-            <div className="w-3/5 bg-white rounded-xl border border-gray-200 p-6 shadow-md overflow-hidden">
+            <div className="w-3/5 h-[465px] bg-white rounded-xl border border-gray-200 p-6 shadow-md overflow-hidden">
               <div className="h-full">
                 {/* Line chart showing sales/transactions trend */}
                 <ChartComponent />
@@ -103,7 +90,7 @@ function Home() {
             </div>
 
             {/* --------- Best Selling Products Section --------- */}
-            <div className="w-2/5 bg-white rounded-xl border border-gray-200 p-6 shadow-md overflow-hidden flex flex-col">
+            <div className="w-2/5 h-[465px] bg-white rounded-xl border border-gray-200 p-6 shadow-md overflow-hidden flex flex-col">
               <h2 className="text-xl font-semibold text-gray-800 mb-4">
                 Best Selling Products
               </h2>
