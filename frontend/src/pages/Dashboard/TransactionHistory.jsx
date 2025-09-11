@@ -316,167 +316,179 @@ function TransactionHistoryReport() {
 
   return (
     <DashboardLayout activeMenu="Transactions">
-      <div className="p-6 h-screen flex flex-col relative">
-        <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300">
+      <div className="p-4 min-h-screen flex flex-col transition-all duration-300">
+        <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col transition-all duration-300">
           {/* ---------------- Title ---------------- */}
           <strong className="text-lg mb-3">Transaction History</strong>
 
-        {/* ---------------- Controls Section ---------------- */}
-        <div className="flex items-center gap-3 mb-4">
-          {/* Back Button */}
-          <button
-            onClick={() => navigate("/dashboard/pos")}
-            className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-900"
-          >
-            ← Back to POS
-          </button>
-
-          {/* Search Bar */}
-          <input
-            type="text"
-            placeholder="Search by Order No. or Date"
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              setCurrentPage(1);
-            }}
-            className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300  rounded-lg h-[35px] w-[280px] shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
-          />
-        </div>
-
-        {/* ---------------- Table Section ---------------- */}
-        <div className="flex flex-col flex-grow">
-          <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
-            <div
-              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
-              style={{ scrollbarGutter: "stable" }}
+          {/* ---------------- Controls Section ---------------- */}
+          <div className="flex items-center gap-3 mb-4">
+            {/* Back Button */}
+            <button
+              onClick={() => navigate("/dashboard/pos")}
+              className="px-4 py-1 bg-gray-700 text-white rounded-md hover:bg-gray-900"
             >
-              <table className="w-full text-sm rounded-lg table-auto">
-                <thead className="border-b border-stone-200 text-center bg-white sticky top-0 z-10">
-                  <tr>
-                    <th className="p-2 text-left whitespace-nowrap">DATE</th>
-                    <th className="p-2 text-left whitespace-nowrap">
-                      ORDER NO.
-                    </th>
-                    <th className="p-2 text-left">ITEM NAME</th>
-                    <th className="p-2 text-center w-[70px]">SIZE</th>
-                    <th className="p-2 text-center w-[60px]">QTY</th>
-                    <th className="p-2 text-right whitespace-nowrap">PRICE</th>
-                    <th className="p-2 text-left max-w-[150px] truncate">
-                      ADD-ONS
-                    </th>
-                    <th className="p-2 text-right whitespace-nowrap">PRICE</th>
-                    <th className="p-2 text-right whitespace-nowrap">
-                      TOTAL COST
-                    </th>
-                    <th className="p-2 text-right whitespace-nowrap">
-                      AMOUNT RECEIVED
-                    </th>
-                    <th className="p-2 text-right whitespace-nowrap">CHANGE</th>
-                    <th className="p-2 text-center whitespace-nowrap">
-                      MODE OF PAYMENT
-                    </th>
-                    <th className="p-2 text-center whitespace-nowrap">
-                      REFERENCE NO.
-                    </th>
-                  </tr>
-                </thead>
+              ← Back to POS
+            </button>
 
-                <tbody className="divide-y divide-stone-100 text-center">
-                  {visibleRows.length > 0 ? (
-                    visibleRows.map((transaction) => (
-                      <tr key={transaction.id} className="hover:bg-gray-50">
-                        <td className="p-2 text-left whitespace-nowrap">
-                          {transaction.date}
-                        </td>
-                        <td className="p-2 text-left font-semibold whitespace-nowrap">
-                          {transaction.orderNo}
-                        </td>
-                        <td className="p-2 text-left">
-                          {transaction.itemName}
-                        </td>
-                        <td className="p-2 text-center">{transaction.size}</td>
-                        <td className="p-2 text-center">
-                          {transaction.quantity}
-                        </td>
-                        <td className="p-2 text-right">
-                          {formatCurrency(transaction.itemPrice)}
-                        </td>
-                        <td className="p-2 text-left text-sm truncate max-w-[150px]">
-                          {transaction.addOns}
-                        </td>
-                        <td className="p-2 text-right">
-                          {formatCurrency(transaction.addOnsPrice)}
-                        </td>
-                        <td className="p-2 text-right font-medium">
-                          {formatCurrency(transaction.totalCost)}
-                        </td>
-                        <td className="p-2 text-right">
-                          {formatCurrency(transaction.amountReceived)}
-                        </td>
-                        <td className="p-2 text-right">
-                          {formatCurrency(transaction.change)}
-                        </td>
-                        <td className="p-2 text-center">
-                          <span
-                            className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              transaction.paymentMode === "Cash"
-                                ? "bg-blue-100 text-blue-800"
-                                : "bg-green-100 text-green-800"
-                            }`}
-                          >
-                            {transaction.paymentMode}
-                          </span>
-                        </td>
-                        <td className="p-2 text-center font-mono text-xs whitespace-nowrap">
-                          {transaction.referenceNo}
+            {/* Search Bar */}
+            <input
+              type="text"
+              placeholder="Search by Order No. or Date"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300  rounded-lg h-[35px] w-[280px] shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
+            />
+          </div>
+
+          {/* ---------------- Table Section ---------------- */}
+          <div className="flex flex-col flex-grow">
+            <div className="bg-white rounded-lg shadow-sm flex flex-col h-[calc(100vh-250px)] overflow-hidden">
+              <div
+                className="overflow-x-auto overflow-y-auto"
+                style={{ scrollbarGutter: "stable" }}
+              >
+                <table className="w-full text-sm rounded-lg table-fixed">
+                  <thead className="border-b border-stone-200 text-center bg-white sticky top-0 z-10">
+                    <tr>
+                      <th className="p-2 text-left whitespace-nowrap w-[120px]">
+                        DATE
+                      </th>
+                      <th className="p-2 text-left whitespace-nowrap w-[120px]">
+                        ORDER NO.
+                      </th>
+                      <th className="p-2 text-left w-[160px]">ITEM NAME</th>
+                      <th className="p-2 text-center w-[80px]">SIZE</th>
+                      <th className="p-2 text-center w-[70px]">QTY</th>
+                      <th className="p-2 text-right whitespace-nowrap w-[100px]">
+                        PRICE
+                      </th>
+                      <th className="p-2 text-left truncate w-[180px]">
+                        ADD-ONS
+                      </th>
+                      <th className="p-2 text-right whitespace-nowrap w-[100px]">
+                        PRICE
+                      </th>
+                      <th className="p-2 text-right whitespace-nowrap w-[120px]">
+                        TOTAL COST
+                      </th>
+                      <th className="p-2 text-right whitespace-nowrap w-[150px]">
+                        AMOUNT RECEIVED
+                      </th>
+                      <th className="p-2 text-right whitespace-nowrap w-[100px]">
+                        CHANGE
+                      </th>
+                      <th className="p-2 text-center whitespace-nowrap w-[140px]">
+                        MODE OF PAYMENT
+                      </th>
+                      <th className="p-2 text-center whitespace-nowrap w-[160px]">
+                        REFERENCE NO.
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody className="divide-y divide-stone-100 text-center">
+                    {visibleRows.length > 0 ? (
+                      visibleRows.map((transaction) => (
+                        <tr key={transaction.id} className="hover:bg-gray-50">
+                          <td className="p-2 text-left whitespace-nowrap">
+                            {transaction.date}
+                          </td>
+                          <td className="p-2 text-left font-semibold whitespace-nowrap">
+                            {transaction.orderNo}
+                          </td>
+                          <td className="p-2 text-left">
+                            {transaction.itemName}
+                          </td>
+                          <td className="p-2 text-center">
+                            {transaction.size}
+                          </td>
+                          <td className="p-2 text-center">
+                            {transaction.quantity}
+                          </td>
+                          <td className="p-2 text-right">
+                            {formatCurrency(transaction.itemPrice)}
+                          </td>
+                          <td className="p-2 text-left text-sm truncate max-w-[150px]">
+                            {transaction.addOns}
+                          </td>
+                          <td className="p-2 text-right">
+                            {formatCurrency(transaction.addOnsPrice)}
+                          </td>
+                          <td className="p-2 text-right font-medium">
+                            {formatCurrency(transaction.totalCost)}
+                          </td>
+                          <td className="p-2 text-right">
+                            {formatCurrency(transaction.amountReceived)}
+                          </td>
+                          <td className="p-2 text-right">
+                            {formatCurrency(transaction.change)}
+                          </td>
+                          <td className="p-2 text-center">
+                            <span
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                transaction.paymentMode === "Cash"
+                                  ? "bg-blue-100 text-blue-800"
+                                  : "bg-green-100 text-green-800"
+                              }`}
+                            >
+                              {transaction.paymentMode}
+                            </span>
+                          </td>
+                          <td className="p-2 text-center font-mono text-xs whitespace-nowrap">
+                            {transaction.referenceNo}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan="13"
+                          className="p-4 text-center text-gray-500"
+                        >
+                          No transaction records found
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td
-                        colSpan="13"
-                        className="p-4 text-center text-gray-500"
-                      >
-                        No transaction records found
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* ---------------- Pagination Controls ---------------- */}
+          <div className="mt-4 flex justify-end">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() =>
+                  currentPage > 1 && setCurrentPage(currentPage - 1)
+                }
+                disabled={currentPage === 1}
+                className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+
+              <span className="text-sm">
+                Page {currentPage} of {totalPages}
+              </span>
+
+              <button
+                onClick={() =>
+                  currentPage < totalPages && setCurrentPage(currentPage + 1)
+                }
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
-
-        {/* ---------------- Pagination Controls ---------------- */}
-        <div className="mt-4 flex justify-end">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Previous
-            </button>
-
-            <span className="text-sm">
-              Page {currentPage} of {totalPages}
-            </span>
-
-            <button
-              onClick={() =>
-                currentPage < totalPages && setCurrentPage(currentPage + 1)
-              }
-              disabled={currentPage === totalPages}
-              className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Next
-            </button>
-          </div>
-        </div>
       </div>
-    </div>
     </DashboardLayout>
   );
 }

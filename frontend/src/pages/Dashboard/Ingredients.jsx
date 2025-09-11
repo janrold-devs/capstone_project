@@ -240,10 +240,10 @@ const Ingredients = () => {
 
   return (
     <DashboardLayout activeMenu="Ingredients & Materials">
-      <div className="p-6 h-screen flex flex-col relative">
+      <div className="p-4 min-h-screen flex flex-col transition-all duration-300">
         {/* -------------------- Main Table Content -------------------- */}
         <div
-          className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
+          className={`bg-stone-100 p-2 rounded-lg border border-gray-200 flex flex-col transition-all duration-300 h-full ${
             showDelete || showAdd || showEdit
               ? "blur-sm pointer-events-none"
               : ""
@@ -300,16 +300,12 @@ const Ingredients = () => {
 
           {/* -------------------- Table -------------------- */}
           <div className="mt-3 flex flex-col flex-grow">
-            <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
+            <div className="bg-white rounded-lg shadow-sm flex flex-col h-[calc(100vh-250px)] overflow-hidden">
               <div
-                className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
+                className="overflow-y-auto flex-grow"
                 style={{ scrollbarGutter: "stable" }}
               >
-                <table
-                  className="w-full text-sm rounded-lg table-fixed"
-                  style={{ minWidth: "900px" }}
-                >
-                  {/* Table Head */}
+                <table className="w-full text-sm rounded-lg table-fixed">
                   <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
                     <tr>
                       <th className="p-2 text-left w-[150px] rounded-tl-lg">
@@ -397,29 +393,32 @@ const Ingredients = () => {
           </div>
 
           {/* -------------------- Pagination -------------------- */}
-          <div className="mt-4 flex justify-end">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() =>
-                  currentPage > 1 && setCurrentPage(currentPage - 1)
-                }
-                disabled={currentPage === 1}
-                className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Previous
-              </button>
-              <span className="text-sm">
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                onClick={() =>
-                  currentPage < totalPages && setCurrentPage(currentPage + 1)
-                }
-                disabled={currentPage === totalPages}
-                className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Next
-              </button>
+
+          <div className="mt-2 pt-2">
+            <div className="flex justify-end">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() =>
+                    currentPage > 1 && setCurrentPage(currentPage - 1)
+                  }
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+                <span className="text-sm">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  onClick={() =>
+                    currentPage < totalPages && setCurrentPage(currentPage + 1)
+                  }
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -53,71 +53,71 @@ const Reports = () => {
 
   return (
     <DashboardLayout activeMenu="Sales">
-    <div className="p-6 h-screen flex flex-col relative">
-      {/* Main container with blur effect when delete modal is open */}
-      <div
-        className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
-          showDelete ? "blur-sm pointer-events-none" : ""
-        }`}
-      >
-        <strong className="text-lg">Reports</strong>
+      <div className="p-6 h-screen flex flex-col relative">
+        {/* Main container with blur effect when delete modal is open */}
+        <div
+          className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col h-[calc(100vh-100px)] transition-all duration-300 ${
+            showDelete ? "blur-sm pointer-events-none" : ""
+          }`}
+        >
+          <strong className="text-lg">Reports</strong>
 
-        {/* ---------------- Top Controls ---------------- */}
-        <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
-          <div className="flex items-center gap-3">
-            {/* Category Dropdown to select report type */}
-            <div className="relative">
-              <BiCategory className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="pl-7 w-full h-[38px] text-gray-500 p-2 border border-gray-300 rounded-lg shadow-sm bg-gray-50 focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
-              >
-                <option value="">Select Report Category</option>
-                <option value="sales">Sales Report</option>
-                <option value="stocks">Stocks Report</option>
-                <option value="spoiled and damaged">
-                  Spoiled and Damaged Report
-                </option>
-                <option value="sales activity">Sales Activity</option>
-              </select>
+          {/* ---------------- Top Controls ---------------- */}
+          <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
+            <div className="flex items-center gap-3">
+              {/* Category Dropdown to select report type */}
+              <div className="relative">
+                <BiCategory className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="pl-7 w-full h-[38px] text-gray-500 p-2 border border-gray-300 rounded-lg shadow-sm bg-gray-50 focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
+                >
+                  <option value="">Select Report Category</option>
+                  <option value="sales">Sales Report</option>
+                  <option value="stocks">Stocks Report</option>
+                  <option value="spoiled and damaged">
+                    Spoiled and Damaged Report
+                  </option>
+                  <option value="sales activity">Sales Activity</option>
+                </select>
+              </div>
+
+              {/* Divider Line */}
+              <div className="w-px h-8 bg-gray-300"></div>
+
+              {/* Export Buttons (Excel, PDF, Print) */}
+              <div className="flex items-center gap-2">
+                <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md transition-colors">
+                  <PiMicrosoftExcelLogoFill className="text-lg" />
+                  Excel
+                </button>
+                <button className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md transition-colors">
+                  <FaFilePdf />
+                  PDF
+                </button>
+                <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md transition-colors">
+                  <IoPrintSharp />
+                  Print
+                </button>
+              </div>
             </div>
 
-            {/* Divider Line */}
-            <div className="w-px h-8 bg-gray-300"></div>
-
-            {/* Export Buttons (Excel, PDF, Print) */}
-            <div className="flex items-center gap-2">
-              <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md transition-colors">
-                <PiMicrosoftExcelLogoFill className="text-lg" />
-                Excel
-              </button>
-              <button className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md transition-colors">
-                <FaFilePdf />
-                PDF
-              </button>
-              <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md transition-colors">
-                <IoPrintSharp />
-                Print
-              </button>
-            </div>
+            {/* Date Range Picker (custom component) */}
+            <DateRange />
           </div>
 
-          {/* Date Range Picker (custom component) */}
-          <DateRange />
+          {/* ---------------- Report Display Area ---------------- */}
+          <div className="mt-4 flex-1 bg-white rounded-lg shadow-sm overflow-hidden">
+            {renderTable()}
+          </div>
         </div>
 
-        {/* ---------------- Report Display Area ---------------- */}
-        <div className="mt-4 flex-1 bg-white rounded-lg shadow-sm overflow-hidden">
-          {renderTable()}
-        </div>
+        {/* ---------------- Delete Modal ---------------- */}
+        {showDelete && (
+          <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
+        )}
       </div>
-
-      {/* ---------------- Delete Modal ---------------- */}
-      {showDelete && (
-        <Delete isVisible={showDelete} onClose={() => setShowDelete(false)} />
-      )}
-    </div>
     </DashboardLayout>
   );
 };

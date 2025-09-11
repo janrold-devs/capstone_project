@@ -8,12 +8,13 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import AddForm from "../../components/ProductForms/AddForm"; // Add new product form
 import EditForm from "../../components/ProductForms/EditForm"; // Edit existing product form
 import DashboardLayout from "../../components/layouts/DashboardLayout";
+import MilkTea from "../../assets/images/milk-tea-sample.jpg";
 
 // --- Sample Product Data (mock data for now) ---
 const data = [
   {
     id: 1,
-    image: "",
+    image: MilkTea,
     productName: "Salted Caramel",
     Size: "16 oz",
     price: 39,
@@ -23,7 +24,7 @@ const data = [
   },
   {
     id: 2,
-    image: "",
+    image: MilkTea,
     productName: "Winter melon Delight",
     Size: "22 oz",
     price: 45,
@@ -33,7 +34,7 @@ const data = [
   },
   {
     id: 3,
-    image: "",
+    image: MilkTea,
     productName: "Matcha Latte",
     Size: "16 oz",
     price: 42,
@@ -43,7 +44,7 @@ const data = [
   },
   {
     id: 4,
-    image: "",
+    image: MilkTea,
     productName: "Brown Sugar Pearl",
     Size: "22 oz",
     price: 50,
@@ -53,7 +54,7 @@ const data = [
   },
   {
     id: 5,
-    image: "",
+    image: MilkTea,
     productName: "Taro Bliss",
     Size: "16 oz",
     price: 43,
@@ -63,7 +64,7 @@ const data = [
   },
   {
     id: 6,
-    image: "",
+    image: MilkTea,
     productName: "Honey Lemon Tea",
     Size: "12 oz",
     price: 38,
@@ -73,7 +74,7 @@ const data = [
   },
   {
     id: 7,
-    image: "",
+    image: MilkTea,
     productName: "Chocolate Mint Frappe",
     Size: "16 oz",
     price: 65,
@@ -83,7 +84,7 @@ const data = [
   },
   {
     id: 8,
-    image: "",
+    image: MilkTea,
     productName: "Thai Milk Tea",
     Size: "22 oz",
     price: 55,
@@ -93,7 +94,7 @@ const data = [
   },
   {
     id: 9,
-    image: "",
+    image: MilkTea,
     productName: "Strawberry Cheesecake",
     Size: "16 oz",
     price: 70,
@@ -103,7 +104,7 @@ const data = [
   },
   {
     id: 10,
-    image: "",
+    image: MilkTea,
     productName: "Ube Latte",
     Size: "12 oz",
     price: 50,
@@ -113,7 +114,7 @@ const data = [
   },
   {
     id: 11,
-    image: "",
+    image: MilkTea,
     productName: "Mango Graham",
     Size: "22 oz",
     price: 60,
@@ -123,7 +124,7 @@ const data = [
   },
   {
     id: 12,
-    image: "",
+    image: MilkTea,
     productName: "Cookies and Cream",
     Size: "16 oz",
     price: 65,
@@ -133,7 +134,7 @@ const data = [
   },
   {
     id: 13,
-    image: "",
+    image: MilkTea,
     productName: "Lychee Green Tea",
     Size: "12 oz",
     price: 45,
@@ -143,7 +144,7 @@ const data = [
   },
   {
     id: 14,
-    image: "",
+    image: MilkTea,
     productName: "Caramel Macchiato",
     Size: "16 oz",
     price: 58,
@@ -153,7 +154,7 @@ const data = [
   },
   {
     id: 15,
-    image: "",
+    image: MilkTea,
     productName: "Pandan Coconut",
     Size: "12 oz",
     price: 48,
@@ -163,7 +164,7 @@ const data = [
   },
   {
     id: 16,
-    image: "",
+    image: MilkTea,
     productName: "Blueberry Yogurt",
     Size: "16 oz",
     price: 52,
@@ -173,7 +174,7 @@ const data = [
   },
   {
     id: 17,
-    image: "",
+    image: MilkTea,
     productName: "Avocado Coffee",
     Size: "12 oz",
     price: 62,
@@ -183,7 +184,7 @@ const data = [
   },
   {
     id: 18,
-    image: "",
+    image: MilkTea,
     productName: "Cucumber Lime",
     Size: "16 oz",
     price: 42,
@@ -193,7 +194,7 @@ const data = [
   },
   {
     id: 19,
-    image: "",
+    image: MilkTea,
     productName: "Red Velvet Latte",
     Size: "12 oz",
     price: 55,
@@ -203,7 +204,7 @@ const data = [
   },
   {
     id: 20,
-    image: "",
+    image: MilkTea,
     productName: "Dalgona Coffee",
     Size: "16 oz",
     price: 60,
@@ -261,11 +262,11 @@ const Products = () => {
       <>
         {/* Main Content Wrapper */}
         <div
-          className={`min-h-screen flex flex-col transition-all duration-300 ${
+          className={`p-4 min-h-screen flex flex-col transition-all duration-300 ${
             showDelete || showAdd || showEdit ? "blur-sm" : "" // Blur background when modal is active
           }`}
         >
-          <div className="bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow">
+          <div className="bg-stone-100 p-2 rounded-lg border border-gray-200 flex flex-col">
             <strong className="text-lg">Product List</strong>
 
             {/* --- Top Controls (Add, Export, Search) --- */}
@@ -318,9 +319,9 @@ const Products = () => {
 
             {/* --- Table Section --- */}
             <div className="mt-3 flex flex-col flex-grow">
-              <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
+              <div className="bg-white rounded-lg shadow-sm flex flex-col h-[calc(100vh-250px)] overflow-hidden">
                 <div
-                  className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
+                  className="overflow-y-auto flex-grow"
                   style={{ scrollbarGutter: "stable" }}
                 >
                   <table className="w-full text-sm rounded-lg table-auto">
@@ -442,7 +443,7 @@ const Products = () => {
               </div>
 
               {/* --- Pagination --- */}
-              <div className="mt-auto pt-4">
+              <div className="mt-2 pt-2">
                 <div className="flex justify-end">
                   <div className="flex items-center gap-4">
                     <button

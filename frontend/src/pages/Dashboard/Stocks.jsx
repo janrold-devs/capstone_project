@@ -151,154 +151,158 @@ const Stocks = () => {
 
   return (
     <DashboardLayout activeMenu="Stocks">
-      <div className="p-6 h-screen flex flex-col relative">
+      <div className="p-4 min-h-screen flex flex-col transition-all duration-300">
         {/* Main Content Area */}
         <div
-          className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col flex-grow transition-all duration-300 ${
+          className={`bg-stone-100 p-2 rounded-lg border border-gray-200 flex flex-col transition-all duration-300 ${
             showAdd ? "blur-sm pointer-events-none" : ""
-        }`}
-      >
-        <strong className="text-lg">Stock List</strong>
+          }`}
+        >
+          <strong className="text-lg">Stock List</strong>
 
-        {/* --- Top Controls Section --- */}
-        <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
-          {/* Left Side: Add + Export Buttons */}
-          <div className="flex items-center gap-3">
-            {/* Add Stock Button (opens modal) */}
-            <button
-              className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md"
-              onClick={() => setShowAdd(true)}
-            >
-              + Add Stock
-            </button>
+          {/* --- Top Controls Section --- */}
+          <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
+            {/* Left Side: Add + Export Buttons */}
+            <div className="flex items-center gap-3">
+              {/* Add Stock Button (opens modal) */}
+              <button
+                className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md"
+                onClick={() => setShowAdd(true)}
+              >
+                + Add Stock
+              </button>
 
-            {/* Divider */}
-            <div className="w-px h-8 bg-gray-300"></div>
+              {/* Divider */}
+              <div className="w-px h-8 bg-gray-300"></div>
 
-            {/* Export Buttons (Excel, PDF, Print) */}
-            <div className="flex items-center gap-2">
-              <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md">
-                <PiMicrosoftExcelLogoFill className="text-lg" />
-                Excel
-              </button>
-              <button className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
-                <FaFilePdf />
-                PDF
-              </button>
-              <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
-                <IoPrintSharp />
-                Print
-              </button>
+              {/* Export Buttons (Excel, PDF, Print) */}
+              <div className="flex items-center gap-2">
+                <button className="flex items-center gap-1 bg-emerald-800 hover:bg-emerald-700 text-white text-sm px-3 py-2 rounded h-[35px] shadow-md">
+                  <PiMicrosoftExcelLogoFill className="text-lg" />
+                  Excel
+                </button>
+                <button className="flex items-center gap-1 bg-red-800 hover:bg-red-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
+                  <FaFilePdf />
+                  PDF
+                </button>
+                <button className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded h-[35px] shadow-md">
+                  <IoPrintSharp />
+                  Print
+                </button>
+              </div>
+            </div>
+
+            {/* Right Side: Search Input */}
+            <div className="flex-1 max-w-xs relative">
+              <input
+                className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
+                type="text"
+                placeholder="Search by Batch Number"
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value); // Update search query
+                  setCurrentPage(1); // Reset to first page on new search
+                }}
+              />
+              {/* Search Icon inside input */}
+              <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
           </div>
 
-          {/* Right Side: Search Input */}
-          <div className="flex-1 max-w-xs relative">
-            <input
-              className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
-              type="text"
-              placeholder="Search by Batch Number"
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value); // Update search query
-                setCurrentPage(1); // Reset to first page on new search
-              }}
-            />
-            {/* Search Icon inside input */}
-            <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-          </div>
-        </div>
-
-        {/* --- Table Section --- */}
-        <div className="mt-3 flex flex-col flex-grow">
-          <div className="bg-white rounded-lg shadow-sm flex flex-col flex-grow overflow-hidden">
-            <div
-              className="overflow-x-auto overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
-              style={{ scrollbarGutter: "stable" }}
-            >
-              <table
-                className="w-full text-sm rounded-lg table-fixed"
-                style={{ minWidth: "900px" }}
+          {/* --- Table Section --- */}
+          <div className="mt-3 flex flex-col flex-grow">
+            <div className="bg-white rounded-lg shadow-sm flex flex-col h-[calc(100vh-250px)] overflow-hidden">
+              <div
+                className="overflow-y-auto flex-grow"
+                style={{ scrollbarGutter: "stable" }}
               >
-                {/* Table Header */}
-                <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
-                  <tr>
-                    <th className="p-2 text-left w-[200px] rounded-tl-lg">
-                      BATCH NUMBER
-                    </th>
-                    <th className="p-2 text-left w-[300px]">STOCKMAN NAME</th>
-                    <th className="p-2 text-left w-[200px] rounded-tr-lg">
-                      DATE
-                    </th>
-                  </tr>
-                </thead>
+                <table className="w-full text-sm rounded-lg table-fixed">
+                  {/* Table Header */}
+                  <thead className="border-b-3 border-stone-100 text-center bg-white sticky top-0 z-10">
+                    <tr>
+                      <th className="p-2 text-left w-[200px] rounded-tl-lg">
+                        BATCH NUMBER
+                      </th>
+                      <th className="p-2 text-left w-[300px]">STOCKMAN NAME</th>
+                      <th className="p-2 text-left w-[200px] rounded-tr-lg">
+                        DATE
+                      </th>
+                    </tr>
+                  </thead>
 
-                {/* Table Body */}
-                <tbody className="divide-y-3 divide-stone-100 text-center">
-                  {paginatedProducts.length > 0 ? (
-                    paginatedProducts.map((order) => (
-                      <tr key={order.id} className="hover:bg-gray-50">
-                        <td className="p-2 text-left w-[200px] font-semibold">
-                          {order.batchNumber}
-                        </td>
-                        <td className="p-2 text-left w-[300px]">
-                          {order.stockmanName}
-                        </td>
-                        <td className="p-2 text-left w-[200px]">
-                          {order.date}
+                  {/* Table Body */}
+                  <tbody className="divide-y-3 divide-stone-100 text-center">
+                    {paginatedProducts.length > 0 ? (
+                      paginatedProducts.map((order) => (
+                        <tr key={order.id} className="hover:bg-gray-50">
+                          <td className="p-2 text-left w-[200px] font-semibold">
+                            {order.batchNumber}
+                          </td>
+                          <td className="p-2 text-left w-[300px]">
+                            {order.stockmanName}
+                          </td>
+                          <td className="p-2 text-left w-[200px]">
+                            {order.date}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      // No records found state
+                      <tr>
+                        <td
+                          colSpan="3"
+                          className="p-4 text-center text-gray-500"
+                        >
+                          No stock records found matching your search
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    // No records found state
-                    <tr>
-                      <td colSpan="3" className="p-4 text-center text-gray-500">
-                        No stock records found matching your search
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* --- Pagination Controls --- */}
+          <div className="mt-2 pt-2">
+            <div className="flex justify-end">
+              <div className="flex items-center gap-4">
+                {/* Previous Page */}
+                <button
+                  onClick={() =>
+                    currentPage > 1 && setCurrentPage(currentPage - 1)
+                  }
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+
+                {/* Current Page Indicator */}
+                <span className="text-sm">
+                  Page {currentPage} of {totalPages}
+                </span>
+
+                {/* Next Page */}
+                <button
+                  onClick={() =>
+                    currentPage < totalPages && setCurrentPage(currentPage + 1)
+                  }
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* --- Pagination Controls --- */}
-        <div className="mt-4 flex justify-end">
-          <div className="flex items-center gap-4">
-            {/* Previous Page */}
-            <button
-              onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Previous
-            </button>
-
-            {/* Current Page Indicator */}
-            <span className="text-sm">
-              Page {currentPage} of {totalPages}
-            </span>
-
-            {/* Next Page */}
-            <button
-              onClick={() =>
-                currentPage < totalPages && setCurrentPage(currentPage + 1)
-              }
-              disabled={currentPage === totalPages}
-              className="px-3 py-1 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Next
-            </button>
-          </div>
-        </div>
+        {/* --- Add Stock Modal --- */}
+        {showAdd && (
+          <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
+        )}
       </div>
-
-      {/* --- Add Stock Modal --- */}
-      {showAdd && (
-        <AddForm isVisible={showAdd} onClose={() => setShowAdd(false)} />
-      )}
-    </div>
     </DashboardLayout>
   );
 };

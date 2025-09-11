@@ -13,7 +13,7 @@ const DashboardLayout = ({ children, activeMenu }) => {
         <Navbar activeMenu={activeMenu} />
 
         {/* Main content is the only part that scrolls */}
-        <div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
+        <div className="flex-1 overflow-hidden bg-gray-50">{children}</div>
       </div>
     </div>
   );

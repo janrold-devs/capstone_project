@@ -4,7 +4,7 @@
 @theme {
   --font-display: "Poppins", "sans-serif";
   --breakpoint-3xl: 1920px;
-  --color-primary: #E89271;
+  --color-primary: #e89271;
 }
 
 @layer base {
@@ -16,6 +16,15 @@
     background-color: #fcfbfc;
     overflow-x: hidden;
   }
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 .input-box {
