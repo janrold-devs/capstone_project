@@ -240,10 +240,10 @@ const Ingredients = () => {
 
   return (
     <DashboardLayout activeMenu="Ingredients & Materials">
-      <div className="p-4 min-h-screen flex flex-col transition-all duration-300">
+      <div className="flex flex-col transition-all duration-300">
         {/* -------------------- Main Table Content -------------------- */}
         <div
-          className={`bg-stone-100 p-2 rounded-lg border border-gray-200 flex flex-col transition-all duration-300 h-full ${
+          className={`bg-stone-100 p-3 rounded-lg border border-gray-200 flex flex-col transition-all duration-300 h-full ${
             showDelete || showAdd || showEdit
               ? "blur-sm pointer-events-none"
               : ""
@@ -252,9 +252,10 @@ const Ingredients = () => {
           <strong className="text-lg">Ingredients and Material List</strong>
 
           {/* -------------------- Top Controls -------------------- */}
-          <div className="bg-white text-sm mt-3 flex flex-wrap items-center justify-between gap-4 p-2 rounded-lg shadow-sm">
+          {/* Top Controls */}
+          <div className="bg-white text-sm mt-3 flex items-center justify-between gap-4 p-2 rounded-lg shadow-sm flex-wrap">
             {/* Left-side: Add button + Export buttons */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-shrink-0">
               <button
                 className="flex items-center gap-1 bg-blue-800 hover:bg-blue-700 text-white text-sm p-2 rounded h-[35px] shadow-md"
                 onClick={() => setShowAdd(true)}
@@ -283,7 +284,7 @@ const Ingredients = () => {
             </div>
 
             {/* Right-side: Search Bar */}
-            <div className="flex-1 max-w-xs relative">
+            <div className="flex-shrink-0 w-full sm:w-64 relative">
               <input
                 className="p-3 pr-10 px-4 bg-gray-50 border border-gray-300 rounded-lg h-[35px] w-full shadow-sm focus:outline-none focus:border-red-200 focus:ring-1 focus:ring-red-300 transition-all duration-200"
                 type="text"
@@ -291,7 +292,7 @@ const Ingredients = () => {
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
-                  setCurrentPage(1); // reset to first page on search
+                  setCurrentPage(1);
                 }}
               />
               <IoSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
@@ -394,7 +395,7 @@ const Ingredients = () => {
 
           {/* -------------------- Pagination -------------------- */}
 
-          <div className="mt-2 pt-2">
+          <div className="mt-1 pt-2">
             <div className="flex justify-end">
               <div className="flex items-center gap-4">
                 <button

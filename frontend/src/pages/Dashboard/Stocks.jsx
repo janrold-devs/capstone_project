@@ -151,7 +151,7 @@ const Stocks = () => {
 
   return (
     <DashboardLayout activeMenu="Stocks">
-      <div className="p-4 min-h-screen flex flex-col transition-all duration-300">
+      <div className="flex flex-col transition-all duration-300">
         {/* Main Content Area */}
         <div
           className={`bg-stone-100 p-2 rounded-lg border border-gray-200 flex flex-col transition-all duration-300 ${

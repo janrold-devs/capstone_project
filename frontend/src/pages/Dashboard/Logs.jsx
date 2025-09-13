@@ -146,7 +146,7 @@ const Logs = () => {
   // -------------------------------
   return (
     <DashboardLayout activeMenu="Activity Logs">
-      <div className="p-4 min-h-screen flex flex-col transition-all duration-300">
+      <div className="flex flex-col transition-all duration-300">
         {/* -------------------- Main Table Content -------------------- */}
         <div className="bg-stone-100 p-2 rounded-lg border border-gray-200 flex flex-col transition-all duration-300 h-full">
           <strong className="text-lg">Activity Logs</strong>

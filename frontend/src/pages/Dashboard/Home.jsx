@@ -45,9 +45,9 @@ function Home() {
 
   return (
     <DashboardLayout activeMenu="Dashboard">
-      <div className="h-screen flex flex-col overflow-hidden bg-gray-50">
+      <div className="flex flex-col bg-gray-50">
         {/* ---------------------- Main content area ---------------------- */}
-        <div className="flex-1 flex flex-col p-6 overflow-hidden">
+        <div className="flex-1 flex flex-col overflow-hidden">
           {/* ---------------------- Top Stats Cards ---------------------- */}
           <div className="grid grid-cols-4 gap-6 mb-6">
             {cardData.map((card) => (

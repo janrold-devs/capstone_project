@@ -53,7 +53,7 @@ const Reports = () => {
 
   return (
     <DashboardLayout activeMenu="Sales">
-      <div className="p-6 h-screen flex flex-col relative">
+      <div className="flex flex-col relative">
         {/* Main container with blur effect when delete modal is open */}
         <div
           className={`bg-stone-100 p-4 rounded-lg border border-gray-200 flex flex-col h-[calc(100vh-100px)] transition-all duration-300 ${
