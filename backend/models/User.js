@@ -1,46 +1,48 @@
-// models/Users.js
-const db = require("../config/db");
+// models/User.js
+const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-const createUser = async (
-  fullname,
-  email,
-  password,
-  profileImageUrl = null
-) => {
-  const hashedPassword = await bcrypt.hash(password, 10);
+const userSchema = new mongoose.Schema(
+  {
+    fullname: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 6,
+    },
+    profileImageUrl: {
+      type: String,
+      default: null,
+    },
+    role: {
+      type: String,
+      enum: ["admin", "staff"],
+      default: "admin", 
+    },
+  },
+  { timestamps: true }
+);
 
-  const [result] = await db.query(
-    "INSERT INTO users (fullname, email, password, profileImageUrl) VALUES (?, ?, ?, ?)",
-    [fullname, email, hashedPassword, profileImageUrl]
-  );
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
 
-  return {
-    id: result.insertId,
-    fullname,
-    email,
-    profileImageUrl,
-  };
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const getUserByEmail = async (email) => {
-  const [rows] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
-  return rows[0];
-};
-
-const getUserById = async (id) => {
-  const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
-  return rows[0];
-};
-
-
-const comparePassword = async (inputPassword, hashedPassword) => {
-  return await bcrypt.compare(inputPassword, hashedPassword);
-};
-
-module.exports = {
-  createUser,
-  getUserByEmail,
-  comparePassword,
-  getUserById
-};
+module.exports = mongoose.model("User", userSchema);

@@ -1,4 +1,3 @@
-import React from 'react'
 import bgImage from '../../assets/images/bg.jpg'
 
 const AuthLayout = ({ children }) => {

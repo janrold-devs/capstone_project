@@ -1,32 +1,39 @@
-const User = require('../models/User');
+const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
 
-// Generate JWT token
+// Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_KEY, { expiresIn: "1h" });
 };
 
 // Register user
 exports.registerUser = async (req, res) => {
-  const { fullName, email, password, profileImageUrl } = req.body;
+  const { fullname, email, password, profileImageUrl } = req.body;
 
-  if (!fullName || !email || !password) {
+  if (!fullname || !email || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
-    const existingUser = await User.getUserByEmail(email);
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "Email already in use" });
     }
 
-    const user = await User.createUser(fullName, email, password, profileImageUrl);
+    const user = await User.create({
+      fullname,
+      email,
+      password,
+      profileImageUrl,
+    });
 
     res.status(201).json({
-      id: user.id,
-      user,
-      token: generateToken(user.id),
+      id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      profileImageUrl: user.profileImageUrl,
+      role: user.role,
+      token: generateToken(user._id),
     });
   } catch (err) {
     res.status(500).json({ message: "Error registering user", error: err.message });
@@ -42,38 +49,37 @@ exports.loginUser = async (req, res) => {
   }
 
   try {
-    const user = await User.getUserByEmail(email);
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const isMatch = await User.comparePassword(password, user.password);
+    const isMatch = await user.matchPassword(password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
     res.status(200).json({
-      id: user.id,
-      fullName: user.fullname,
+      id: user._id,
+      fullname: user.fullname,
       email: user.email,
       profileImageUrl: user.profileImageUrl,
-      token: generateToken(user.id),
+      role: user.role,
+      token: generateToken(user._id),
     });
   } catch (err) {
     res.status(500).json({ message: "Login failed", error: err.message });
   }
 };
 
-// Get user info
+// Get logged-in user
 exports.getUserInfo = async (req, res) => {
   try {
-    const user = await User.getUserById(req.user.id);
+    const user = await User.findById(req.user.id).select("-password");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    const { password, ...userData } = user; // Remove password field manually
-    res.status(200).json(userData);
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json({ message: "Error retrieving user", error: err.message });
   }
