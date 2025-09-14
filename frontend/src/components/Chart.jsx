@@ -114,7 +114,7 @@ export default function ChartComponent() {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg">
+    <div className="bg-white p-2 rounded-lg">
       {/* -------------------- Header: Title + Time Range Buttons -------------------- */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
         <h2 className="text-xl font-semibold">Sales Overview</h2>
