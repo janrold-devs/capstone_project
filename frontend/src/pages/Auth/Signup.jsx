@@ -14,6 +14,23 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
+  const handleSignup = async (e) => {
+    e.preventDefault();
+
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if(!password) {
+      setError("Please enter password");
+      return;
+    }
+
+    setError("");
+
+    //Signup API Call
+  };
   return (
     <AuthLayout>
       <div className="flex justify-center items-center min-h-screen">
